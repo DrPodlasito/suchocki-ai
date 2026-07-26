@@ -1,0 +1,50 @@
+---
+title: Defence alone is a losing posture
+summary: >-
+  Why the talent shortage in security will not be solved by hiring faster — and
+  what changes when the machine does the finding.
+date: 2026-07-01
+location: Warsaw
+readingMinutes: 11
+languages: [EN, PL]
+notes:
+  - >-
+    I make the same argument at greater length in an interview at CYBERSEC CEE
+    2024, under the less subtle title “Cybersecurity: not only defence, but also
+    attack.”
+  - >-
+    Dobrowolski, Suchocki, Tomczykiewicz, Majda-Zdancewicz, “Classification of
+    auditory brainstem response using wavelet decomposition and SVM network,”
+    _Biocybernetics and Biomedical Engineering_ 36(2), 2016.
+---
+
+<div class="lede">
+  I tend to describe security the way you would describe a football match or a
+  military operation. There is a reason for that, and it is not rhetorical.
+</div>
+
+## The match analogy
+
+You cannot win by defending the whole time. A team that never crosses the halfway line concedes eventually — not because its defenders are bad, but because the arithmetic of a ninety-minute game is against them. Security programmes built entirely out of controls, monitoring, and response are playing that game, and they are losing it slowly enough that nobody calls it a loss.<sup>1</sup>
+
+The alternative is not recklessness. It is going to find the gaps yourself, on your own terms, on your own schedule — before someone less friendly finds them on theirs. That is what offensive security is, and everything else in my working life follows from taking it seriously.
+
+## What a shortage really is
+
+Every report on this field opens with the same number: we are short some millions of security professionals. I am convinced that framing is wrong, or at least useless. A shortage of people is a symptom; the disease is that the work per target has grown faster than the supply of people who can do it well.
+
+> The shortage will not be solved by hiring faster. It will be solved by tools that let a smaller number of skilled people do far more.
+
+This is not an argument for replacing testers. It is an argument about where their attention should go. Reconnaissance, enumeration, correlating what is publicly known about how a class of system breaks with what is true about this specific target — that is work with structure, and structured work is exactly what machines take over first.
+
+## Machines that read signal
+
+My doctorate had nothing to do with cybersecurity. I worked on the human auditory system, classifying brainstem evoked potentials — a kind of EEG signal — using wavelet decomposition and support-vector machines.<sup>2</sup> The point was to let a machine read a neurological signal that a clinician normally interprets by eye, and read it more consistently.
+
+So before I ever automated an attack, I had spent years teaching algorithms to find the signal in noise. When I started building [FuseAI](/ventures/), the shape of the problem was familiar: a large, noisy observation space; a small number of findings that actually matter; and a human expert whose judgement you are trying to encode rather than replace.
+
+## The other side has this too
+
+Any honest version of this argument has to say the uncomfortable part out loud: the same tools are available to the other side, and they are not waiting for a governance framework. That asymmetry is the reason I think the next few years matter more than the last ten. It is also why I spend time on the governance question at all — I am an ISO 42001 lead auditor, which is a way of saying I care whether AI systems are governed as seriously as they are hyped.
+
+The gap between what practitioners know and what decision-makers assume is, itself, a vulnerability. That is most of why I write.

@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Not found — Michał Suchocki" description="That page does not exist.">
+  <main class="wrap page">
+    <div class="rail">
+      <div class="rail__label">404</div>
+      <div>
+        <h1 class="page-title">Nothing here</h1>
+        <p class="page-intro">
+          That URL does not exist, or it moved. Essays keep their addresses permanently, so if a
+          link to one is broken it is my mistake — tell me.
+        </p>
+        <div class="links">
+          <a class="mono-link" href="/">← Home</a>
+          <a class="mono-link" href="/writing/">Writing</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .page {
+    padding-block: 88px 40px;
+  }
+
+  .rail__label {
+    padding-top: 14px;
+  }
+
+  .links {
+    display: flex;
+    gap: 26px;
+    margin-top: 36px;
+  }
+</style>

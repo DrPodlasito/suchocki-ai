@@ -1,0 +1,586 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Signal from '../components/Signal.astro';
+import { site, links } from '../data/site';
+
+const essays = (await getCollection('essays', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Michał Suchocki',
+  honorificPrefix: 'dr inż.',
+  url: site.url,
+  email: `mailto:${site.email}`,
+  jobTitle: 'CEO & co-founder, CyCommSec',
+  description: site.description,
+  knowsLanguage: ['pl', 'en'],
+  address: { '@type': 'PostalAddress', addressLocality: 'Warsaw', addressCountry: 'PL' },
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Military University of Technology (WAT)',
+    address: { '@type': 'PostalAddress', addressLocality: 'Warsaw', addressCountry: 'PL' },
+  },
+  worksFor: { '@type': 'Organization', name: 'CyCommSec', url: links.cycommsec },
+  knowsAbout: [
+    'Offensive security',
+    'Penetration testing',
+    'Artificial intelligence governance',
+    'ISO/IEC 42001',
+    'NIS2',
+    'DORA',
+    'Biomedical signal processing',
+  ],
+  sameAs: [links.linkedin, links.cycommsec, links.fuseai].filter((u) => u !== '#'),
+};
+---
+
+<Base schema={[personSchema]}>
+  <main>
+    <!-- ------------------------------------------------------------- HERO -->
+    <section class="section hero">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="wrap hero__inner">
+        <div class="hero__eyebrow" data-reveal>
+          <span class="eyebrow eyebrow--bright">Warsaw · Offensive security & AI</span>
+          <span class="hero__rule" aria-hidden="true"></span>
+        </div>
+
+        <h1 class="hero__title" data-reveal>Michał<br />Suchocki<span>.</span></h1>
+
+        <div class="hero__roles" data-reveal>
+          {
+            site.roles.map((role, i) => (
+              <>
+                {i > 0 && <span class="dot" aria-hidden="true">·</span>}
+                <span>{role}</span>
+              </>
+            ))
+          }
+        </div>
+
+        <Signal />
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------- THESIS -->
+    <section class="section">
+      <div class="wrap rail">
+        <div class="rail__label">Thesis</div>
+        <div class="thesis" data-reveal>
+          <p class="thesis__lead">I like being there for version one.</p>
+          <p class="justify">
+            I started at Samsung, taking the first Galaxy phones through field testing before
+            anyone knew whether the line would matter. Then Huawei, as a product manager on one
+            of the first commercial LTE networks in Poland — at a point when LTE was still mostly
+            a promise on a slide. At Cybercom I built the telecom, automotive and IoT practices,
+            shipped platforms on three continents, and eventually ran the region out of Dubai. I
+            co-founded Cyberteq and grew it across the Middle East and Africa. In between there
+            was technology strategy at Accenture, consulting at Detecon, and several years
+            advising Philip Morris International as a security and generative-AI architect.
+          </p>
+          <p>
+            I came into all of it as an engineer. I trained in electronics and telecommunications
+            at the Military University of Technology in Warsaw and stayed long enough to finish a
+            doctorate — on the human auditory system, classifying brainstem evoked potentials with
+            wavelet decomposition and support vector machines. The point was to let a machine read
+            a neurological signal a clinician would normally interpret by eye, and read it more
+            consistently. That software is still used in hearing diagnostics, and it became
+            <a class="link-underline" href="/ventures/#neurality">Neurality</a>. So before I ever
+            automated an attack I had spent years teaching algorithms to find the signal in the
+            noise. The problems turned out to be more alike than they look.
+          </p>
+          <p>
+            Today I run <a class="link-underline" href="/ventures/#cycommsec">CyCommSec</a> in
+            Warsaw, and I made <a class="link-underline" href="/ventures/#fuseai">FuseAI</a> — a
+            multi-agent system that uses large language models to automate penetration testing and
+            the whole cycle of vulnerability management. I think offensive security is one of the
+            places where AI will change the rules fastest, and I'd like to be one of the people who
+            decides how. But cybersecurity is where I do the work right now, not what the work is.
+            Building is what I actually do — and I expect the next thing I build will look nothing
+            like the last one.
+          </p>
+          <p class="last">
+            I still teach: penetration testing and OT security at AGH in Kraków, cybersecurity and
+            the theory of computation and simulation at WAT, AI in cybersecurity at SGH. I write
+            for Forbes Poland and speak when I can be useful. I work in Polish and English, from
+            Warsaw.
+          </p>
+          <a class="cta" href="/about/">Full biography →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------- WRITING -->
+    <section class="section">
+      <div class="wrap rail">
+        <div class="rail__label">Writing</div>
+        <div data-reveal>
+          {
+            essays.slice(0, 2).map((essay) => (
+              <a class="essay-row" href={`/writing/${essay.id}/`}>
+                <div class="essay-row__body">
+                  <div class="essay-row__title">{essay.data.title}</div>
+                  <div class="essay-row__summary">{essay.data.summary}</div>
+                </div>
+                <div class="essay-row__date">{fmt(essay.data.date)}</div>
+              </a>
+            ))
+          }
+          <div class="link-row">
+            <a class="mono-link" href="/writing/">All writing →</a>
+            <a class="mono-link" href={links.forbes} rel="noopener" target="_blank">
+              Forbes Poland ↗
+            </a>
+            <a class="mono-link" href="/rss.xml">RSS</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --------------------------------------------------------- RESEARCH -->
+    <section class="section">
+      <div class="wrap rail">
+        <div class="rail__label">Research</div>
+        <div data-reveal>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat__n">97<span>%</span></div>
+              <div class="stat__label">
+                Classification accuracy, clinically validated — 95% sensitivity, 98% specificity.
+              </div>
+            </div>
+            <div class="stat">
+              <div class="stat__n">2018</div>
+              <div class="stat__label">
+                Doctorate, Military University of Technology (WAT), Warsaw.
+              </div>
+            </div>
+            <div class="stat">
+              <div class="stat__n">3</div>
+              <div class="stat__label">
+                Universities where I lecture: WAT, AGH Kraków, SGH Warsaw.
+              </div>
+            </div>
+          </div>
+
+          <p class="research__note">
+            My academic work is in biomedical signal processing — using machine learning to
+            interpret neurological signals. The software it produced is still used in hearing
+            diagnostics.
+          </p>
+
+          <div class="paper">
+            <div class="paper__title">
+              Classification of auditory brainstem response using wavelet decomposition and SVM
+              network
+            </div>
+            <div class="paper__meta">
+              Dobrowolski, Suchocki, Tomczykiewicz, Majda-Zdancewicz · Biocybernetics and
+              Biomedical Engineering 36(2), 2016
+            </div>
+          </div>
+
+          <div class="link-row">
+            <a class="mono-link" href={links.scholar} rel="noopener" target="_blank">
+              Google Scholar ↗
+            </a>
+            <a class="mono-link" href={links.ieee} rel="noopener" target="_blank">DOI ↗</a>
+            <a class="mono-link" href="/about/#publications">All publications →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --------------------------------------------------------- VENTURES -->
+    <section class="section">
+      <div class="wrap rail">
+        <div class="rail__label">Ventures</div>
+        <div data-reveal>
+          <div class="cards">
+            <a class="card" href="/ventures/#cycommsec">
+              <div class="card__role">CEO, co-founder</div>
+              <div class="card__name">CyCommSec</div>
+              <div class="card__body">
+                ISO 27001-certified offensive security, vulnerability management, and NIS2 / DORA
+                compliance — built by practitioners for the people who carry the risk.
+              </div>
+              <div class="card__foot">cycommsec.com ↗</div>
+            </a>
+            <a class="card" href="/ventures/#fuseai">
+              <div class="card__role">Creator</div>
+              <div class="card__name">FuseAI</div>
+              <div class="card__body">
+                An autonomous, multi-agent penetration-testing platform powered by LLMs, designed
+                to run on-premise for organizations that need full control of their data.
+              </div>
+              <div class="card__foot">getfuseai.com ↗</div>
+            </a>
+            <a class="card" href="/ventures/#neurality">
+              <div class="card__role">Founder</div>
+              <div class="card__name">Neurality</div>
+              <div class="card__body">
+                An AI R&D company applying signal processing and machine learning to healthcare,
+                beginning with automated hearing diagnostics.
+              </div>
+              <div class="card__foot">Digital Health Accelerator, Batch II</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --------------------------------------------------------- TRAINING -->
+    <section class="section">
+      <div class="wrap rail">
+        <div class="rail__label">Training</div>
+        <div data-reveal>
+          <p class="thesis__lead">
+            I teach this for a living, not as a sideline.
+          </p>
+          <p class="training__body">
+            Three university lectureships and seventeen years of shipping the systems under
+            discussion. The courses below are the same material, compressed for people who have
+            to make decisions on Monday.
+          </p>
+          <div class="link-row">
+            <a class="mono-link" href="/training/">Courses & workshops →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------- SELECTED TALKS -->
+    <section class="section">
+      <div class="wrap rail">
+        <div class="rail__label">Selected talks</div>
+        <div data-reveal>
+          <div class="row-list">
+            <div class="row row--top">
+              <span class="row__title">
+                FuseAI: a multi-agent system for penetration-testing automation
+              </span>
+              <span class="row__meta">The Hack Summit · 2025</span>
+            </div>
+            <div class="row">
+              <span class="row__title">Cybersecurity: not only defence, but also attack</span>
+              <span class="row__meta">CYBERSEC CEE · 2024</span>
+            </div>
+            <div class="row">
+              <span class="row__title">Cyber offense in risk management</span>
+              <span class="row__meta">AGH Cyber Kampus · 2023</span>
+            </div>
+          </div>
+          <div class="link-row">
+            <a class="mono-link" href="/speaking/">Talks, lectures & media →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>
+
+<style>
+  /* --- Hero --------------------------------------------------------------- */
+  .hero {
+    position: relative;
+  }
+
+  .hero__glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      900px 380px at 78% -10%,
+      rgba(237, 233, 225, 0.07),
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .hero__inner {
+    padding: 96px 0 76px;
+    padding-inline: var(--gutter);
+    position: relative;
+  }
+
+  .hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 38px;
+  }
+
+  .eyebrow--bright {
+    color: var(--ink);
+    font-size: 11.5px;
+  }
+
+  .hero__rule {
+    flex: 1 1 auto;
+    height: 1px;
+    background: linear-gradient(90deg, var(--rule-strong), transparent);
+  }
+
+  .hero__title {
+    margin: 0;
+    font-size: var(--size-hero);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    font-weight: 600;
+    transition-delay: 0.05s;
+  }
+
+  .hero__roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin-top: 34px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+    transition-delay: 0.12s;
+  }
+
+  .dot {
+    color: var(--ink-dot);
+  }
+
+  /* --- Thesis ------------------------------------------------------------- */
+  .thesis {
+    max-width: var(--prose);
+  }
+
+  .thesis__lead {
+    margin: 0 0 26px;
+    font-size: var(--size-lead);
+    line-height: 1.34;
+    letter-spacing: -0.018em;
+    color: var(--ink-heading);
+  }
+
+  .thesis p {
+    margin: 0 0 20px;
+    color: var(--ink-body);
+  }
+
+  .thesis p.justify {
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .thesis p.last {
+    margin-bottom: 0;
+  }
+
+  .cta {
+    display: inline-block;
+    margin-top: 30px;
+    font-family: var(--font-mono);
+    font-size: var(--nav-size);
+    letter-spacing: var(--nav-tracking);
+    text-transform: uppercase;
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule-accent);
+    padding-bottom: 3px;
+  }
+
+  .cta:hover {
+    color: var(--ink-bright);
+    border-bottom-color: var(--ink-bright);
+  }
+
+  /* --- Essay rows --------------------------------------------------------- */
+  .essay-row {
+    display: flex;
+    gap: 28px;
+    align-items: baseline;
+    border-top: 1px solid var(--rule);
+    padding: 26px 0;
+  }
+
+  .essay-row:last-of-type {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .essay-row:hover {
+    background: rgba(237, 233, 225, 0.03);
+  }
+
+  .essay-row__body {
+    flex: 1 1 auto;
+  }
+
+  .essay-row__title {
+    font-size: var(--size-card-title);
+    line-height: 1.28;
+    letter-spacing: -0.018em;
+    color: var(--ink-heading);
+  }
+
+  .essay-row__summary {
+    margin-top: 8px;
+    font-size: 15.5px;
+    color: var(--ink-muted);
+    max-width: 60ch;
+  }
+
+  .essay-row__date {
+    flex: 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: var(--nav-size);
+    letter-spacing: 0.05em;
+    color: var(--ink-faint);
+  }
+
+  .link-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 26px;
+    margin-top: 24px;
+  }
+
+  /* --- Research ----------------------------------------------------------- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .stat {
+    background: var(--surface);
+    padding: 26px 24px;
+  }
+
+  .stat__n {
+    font-family: var(--font-mono);
+    font-size: 34px;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+
+  .stat__n span {
+    font-size: 18px;
+  }
+
+  .stat__label {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 1.45;
+  }
+
+  .research__note {
+    margin: 26px 0 0;
+    max-width: var(--prose);
+    color: var(--ink-body);
+  }
+
+  .paper {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .paper__title {
+    font-size: 16px;
+    color: var(--ink);
+    max-width: 76ch;
+  }
+
+  .paper__meta {
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: var(--nav-size);
+    color: var(--ink-faint);
+  }
+
+  /* --- Venture cards ------------------------------------------------------ */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    border: 1px solid var(--rule-strong);
+    background: var(--surface);
+    padding: 26px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 220px;
+  }
+
+  .card:hover {
+    border-color: var(--ink);
+    background: var(--surface-hover);
+  }
+
+  .card__role {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .card__name {
+    font-size: 23px;
+    letter-spacing: -0.02em;
+    color: var(--ink-heading);
+  }
+
+  .card__body {
+    font-size: 14.5px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+    flex: 1 1 auto;
+  }
+
+  .card__foot {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+  }
+
+  /* --- Training teaser ---------------------------------------------------- */
+  .training__body {
+    margin: 0;
+    max-width: var(--prose);
+    color: var(--ink-body);
+  }
+
+  .row--top {
+    border-top: 1px solid var(--rule);
+  }
+
+  /* --- Responsive --------------------------------------------------------- */
+  @media (max-width: 900px) {
+    .hero__inner {
+      padding-block: 56px 52px;
+    }
+
+    .stats,
+    .cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .thesis p.justify {
+      text-align: left;
+    }
+
+    .essay-row {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+</style>

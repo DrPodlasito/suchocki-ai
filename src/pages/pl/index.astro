@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+---
+
+<Base
+  title="Michał Suchocki — wersja polska"
+  description="Polska wersja strony jest w przygotowaniu."
+>
+  <main class="wrap page" lang="pl">
+    <div class="rail">
+      <div class="rail__label">Polski</div>
+      <div>
+        <h1 class="page-title">Wkrótce</h1>
+        <p class="page-intro">
+          Polska wersja strony jest w przygotowaniu. Do tego czasu wszystkie treści dostępne są
+          po angielsku.
+        </p>
+        <div class="links">
+          <a class="mono-link" href="/">← English version</a>
+          <a class="mono-link" href={`mailto:${site.email}`}>{site.email}</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .page {
+    padding-block: 88px 40px;
+  }
+
+  .rail__label {
+    padding-top: 14px;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 26px;
+    margin-top: 36px;
+  }
+</style>

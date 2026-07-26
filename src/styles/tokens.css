@@ -1,0 +1,76 @@
+/* ---------------------------------------------------------------------------
+   Design tokens
+   Normalised by hand from the Claude Design export, which shipped 311 inline
+   style attributes and no variables. Every value below appears in the mockup;
+   nothing here is invented. Achromatic by decision — no accent hue.
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* --- Surfaces ---------------------------------------------------------- */
+  --field: #0A0A0A;         /* page background */
+  --surface: #0D0D0C;       /* cards, stat cells */
+  --surface-hover: #111110; /* card hover */
+  --header-bg: rgba(10, 12, 13, 0.82);
+
+  /* --- Rules ------------------------------------------------------------- */
+  --rule: #1B1B1A;          /* hairlines between sections and rows */
+  --rule-strong: #232323;   /* card borders, group headings */
+  --rule-accent: #3A3A38;   /* underline on inline links */
+  --rule-quote: #7A7770;    /* blockquote bar */
+  --divider: #262625;       /* the 1px nav divider */
+
+  /* --- Ink --------------------------------------------------------------- */
+  --ink: #EDE9E1;           /* default text */
+  --ink-bright: #FFFFFF;    /* hover only */
+  --ink-heading: #F5F2EC;   /* headings and lead lines */
+  --ink-body: #C6C3BC;      /* long-form paragraphs */
+  --ink-muted: #8C8981;     /* summaries, secondary nav */
+  --ink-faint: #5C5A55;     /* eyebrows, metadata */
+  --ink-ghost: #46453F;     /* captions, the nav slash */
+  --ink-dot: #2E2E2C;       /* the interpunct separators */
+  --selection-fg: #04100E;
+
+  /* --- Type -------------------------------------------------------------- */
+  --font-sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --text-base: 17px;
+  --leading-base: 1.65;
+
+  /* Fluid display sizes, straight from the mockup clamps */
+  --size-hero: clamp(52px, 8.2vw, 116px);
+  --size-page-title: clamp(40px, 5.4vw, 72px);
+  --size-essay-title: clamp(38px, 5vw, 66px);
+  --size-about-title: clamp(38px, 4.6vw, 60px);
+  --size-lead: clamp(23px, 2.3vw, 31px);
+  --size-card-title: clamp(21px, 1.9vw, 26px);
+  --size-index-title: clamp(24px, 2.3vw, 32px);
+  --size-h2: 27px;
+
+  /* Monospace eyebrow — used a dozen times, so it earns a token */
+  --eyebrow-size: 11px;
+  --eyebrow-tracking: 0.16em;
+  --nav-size: 11.5px;
+  --nav-tracking: 0.13em;
+
+  /* --- Layout ------------------------------------------------------------ */
+  --measure: 1240px;        /* content max-width */
+  --gutter: 40px;
+  --rail: 172px;            /* the left label column */
+  --rail-gap: 56px;
+  --section-y: 76px;
+  --header-h: 62px;
+  --prose: 66ch;
+
+  /* --- Motion ------------------------------------------------------------ */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --reveal-duration: 0.8s;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --gutter: 22px;
+    --section-y: 52px;
+    --rail-gap: 22px;
+  }
+}

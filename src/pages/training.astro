@@ -1,0 +1,284 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+import { courses } from '../data/courses';
+
+/**
+ * schema.org Course markup makes each offering eligible for Google's
+ * course-specific results. hasCourseInstance is required for those rich
+ * results; without a scheduled date we describe the delivery mode only.
+ */
+const schema = courses.map((c) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: c.title,
+  description: c.summary.replace(/\s+/g, ' ').trim(),
+  url: new URL(`/training/#${c.id}`, site.url).href,
+  inLanguage: ['pl', 'en'],
+  teaches: c.outcomes,
+  provider: {
+    '@type': 'Person',
+    name: site.name,
+    url: site.url,
+  },
+  hasCourseInstance: {
+    '@type': 'CourseInstance',
+    courseMode: ['onsite', 'online'],
+    courseWorkload: c.durationISO,
+    instructor: { '@type': 'Person', name: site.name, url: site.url },
+    location: {
+      '@type': 'Place',
+      name: 'On-site, client premises',
+      address: { '@type': 'PostalAddress', addressCountry: 'PL' },
+    },
+  },
+}));
+---
+
+<Base
+  title={`Training — ${site.name}`}
+  description="AI governance, offensive security, and applied AI in cybersecurity — taught by a practitioner who lectures at WAT, AGH and SGH and builds the systems under discussion."
+  schema={schema}
+>
+  <main class="wrap page">
+    <div class="rail">
+      <div class="rail__label">Courses</div>
+      <div>
+        <h1 class="page-title">Training</h1>
+        <p class="page-intro">
+          I lecture at WAT, AGH Kraków and SGH, and I run the same material privately for teams
+          that need it faster. Every course is taught by someone who ships the systems being
+          discussed — not a trainer working from someone else's slides.
+        </p>
+
+        <div class="stack">
+          {
+            courses.map((c) => (
+              <section class="course" id={c.id}>
+                <div class="course__main">
+                  <div class="course__eyebrow">{c.eyebrow}</div>
+                  <h2>{c.title}</h2>
+                  <p class="course__summary">{c.summary}</p>
+                  <div class="course__head">What you leave with</div>
+                  <ul>
+                    {c.outcomes.map((o) => (
+                      <li>{o}</li>
+                    ))}
+                  </ul>
+                </div>
+                <dl class="course__facts">
+                  <div>
+                    <dt>Format</dt>
+                    <dd>{c.format}</dd>
+                  </div>
+                  <div>
+                    <dt>Length</dt>
+                    <dd>{c.duration}</dd>
+                  </div>
+                  <div>
+                    <dt>For</dt>
+                    <dd>{c.audience}</dd>
+                  </div>
+                  <div>
+                    <dt>Language</dt>
+                    <dd>{c.languages}</dd>
+                  </div>
+                </dl>
+              </section>
+            ))
+          }
+        </div>
+
+        <!-- ------------------------------------------------------ ENQUIRY -->
+        <section id="enquire" class="enquire">
+          <div class="eyebrow">Enquire</div>
+          <p class="enquire__lead">
+            Tell me the team, the problem, and roughly when. I will reply with a shape and a
+            price, or tell you it isn't a fit.
+          </p>
+
+          <!--
+            TODO — replace this block with the HubSpot form embed so enquiries
+            land in the CRM directly. Until then a mailto keeps the page honest
+            and working. See README.md → "Wiring the enquiry form".
+          -->
+          <a class="enquire__cta" href={`mailto:${site.email}?subject=Training%20enquiry`}>
+            {site.email} →
+          </a>
+        </section>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .page {
+    padding-block: 88px 40px;
+  }
+
+  .rail__label {
+    padding-top: 14px;
+  }
+
+  .stack {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .course {
+    background: var(--surface);
+    padding: 38px 34px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 48px;
+    scroll-margin-top: calc(var(--header-h) + 24px);
+  }
+
+  .course__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 14px;
+  }
+
+  .course h2 {
+    margin: 0 0 14px;
+    font-size: 30px;
+    letter-spacing: -0.026em;
+    font-weight: 600;
+    color: var(--ink-heading);
+    line-height: 1.15;
+  }
+
+  .course__summary {
+    margin: 0;
+    max-width: 58ch;
+    color: var(--ink-body);
+  }
+
+  .course__head {
+    margin-top: 26px;
+    font-family: var(--font-mono);
+    font-size: var(--eyebrow-size);
+    letter-spacing: var(--eyebrow-tracking);
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .course ul {
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: 58ch;
+  }
+
+  .course li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 9px;
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  .course li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 8px;
+    height: 1px;
+    background: var(--rule-quote);
+  }
+
+  .course__facts {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    border-left: 1px solid var(--rule);
+    padding-left: 26px;
+  }
+
+  .course__facts dt {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .course__facts dd {
+    margin: 6px 0 0;
+    font-size: 14.5px;
+    color: var(--ink-muted);
+    line-height: 1.45;
+  }
+
+  /* --- Enquiry ------------------------------------------------------------ */
+  .enquire {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule-strong);
+    scroll-margin-top: calc(var(--header-h) + 24px);
+  }
+
+  .enquire .eyebrow {
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .enquire__lead {
+    margin: 0;
+    max-width: 56ch;
+    font-size: var(--size-lead);
+    line-height: 1.34;
+    letter-spacing: -0.018em;
+    color: var(--ink-heading);
+  }
+
+  .enquire__cta {
+    display: inline-block;
+    margin-top: 26px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule-accent);
+    padding-bottom: 4px;
+  }
+
+  .enquire__cta:hover {
+    color: var(--ink-bright);
+    border-bottom-color: var(--ink-bright);
+  }
+
+  @media (max-width: 900px) {
+    .page {
+      padding-block: 48px 24px;
+    }
+
+    .stack {
+      margin-top: 36px;
+    }
+
+    .course {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 26px;
+      padding: 28px 22px;
+    }
+
+    .course__facts {
+      border-left: none;
+      border-top: 1px solid var(--rule);
+      padding-left: 0;
+      padding-top: 22px;
+    }
+  }
+</style>

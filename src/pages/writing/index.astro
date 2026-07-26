@@ -1,0 +1,142 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { site, links } from '../../data/site';
+
+const essays = (await getCollection('essays', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+---
+
+<Base
+  title={`Writing — ${site.name}`}
+  description="Essays on offensive security, applied AI and governance. English first; Polish follows."
+>
+  <main class="wrap page">
+    <div class="rail">
+      <div class="rail__label">Index</div>
+      <div>
+        <h1 class="page-title">Writing</h1>
+        <p class="page-intro">
+          Essays live here permanently, at their own URLs. English first; Polish follows within a
+          week. One piece every four to six weeks — no schedule promised.
+        </p>
+
+        <div class="list">
+          {
+            essays.map((essay) => (
+              <a class="entry" href={`/writing/${essay.id}/`}>
+                <div class="entry__body">
+                  <div class="entry__title">{essay.data.title}</div>
+                  <div class="entry__summary">{essay.data.summary}</div>
+                </div>
+                <div class="entry__meta">
+                  {fmt(essay.data.date)} · {essay.data.languages.join(' / ')}
+                </div>
+              </a>
+            ))
+          }
+        </div>
+
+        <div class="elsewhere">
+          <div class="eyebrow">Elsewhere</div>
+          <a class="row row--top" href={links.forbes} rel="noopener" target="_blank">
+            <span class="row__title">Columns and commentary</span>
+            <span class="row__meta">Forbes Poland ↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .page {
+    padding-block: 88px 40px;
+  }
+
+  .rail__label {
+    padding-top: 14px;
+  }
+
+  .page-intro {
+    max-width: 60ch;
+  }
+
+  .list {
+    margin-top: 52px;
+  }
+
+  .entry {
+    display: flex;
+    gap: 28px;
+    align-items: baseline;
+    border-top: 1px solid var(--rule);
+    padding: 30px 0;
+  }
+
+  .entry:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .entry:hover {
+    background: rgba(237, 233, 225, 0.03);
+  }
+
+  .entry__body {
+    flex: 1 1 auto;
+  }
+
+  .entry__title {
+    font-size: var(--size-index-title);
+    line-height: 1.22;
+    letter-spacing: -0.024em;
+    color: var(--ink-heading);
+  }
+
+  .entry__summary {
+    margin-top: 10px;
+    font-size: 16px;
+    color: var(--ink-muted);
+    max-width: 62ch;
+  }
+
+  .entry__meta {
+    flex: 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: var(--nav-size);
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .elsewhere {
+    margin-top: 56px;
+    padding-top: 22px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .elsewhere .eyebrow {
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .row--top {
+    border-top: 1px solid var(--rule);
+    border-bottom: none;
+    padding-block: 15px;
+  }
+
+  @media (max-width: 900px) {
+    .page {
+      padding-block: 48px 24px;
+    }
+
+    .entry {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+</style>

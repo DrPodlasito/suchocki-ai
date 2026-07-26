@@ -1,0 +1,203 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, links } from '../data/site';
+
+const ventures = [
+  {
+    id: 'cycommsec',
+    role: 'CEO & co-founder · active',
+    name: 'CyCommSec',
+    body: `A Warsaw-based, ISO 27001-certified cybersecurity company offering offensive security,
+      vulnerability management, and NIS2 / DORA compliance — built by practitioners for the people
+      who carry the risk.`,
+    facts: ['Warsaw, PL', 'ISO 27001 certified', 'Finalist, ECSO STARtup Award 2024'],
+    link: { label: 'cycommsec.com ↗', href: links.cycommsec },
+  },
+  {
+    id: 'fuseai',
+    role: 'Creator · shipping',
+    name: 'FuseAI',
+    body: `An autonomous, multi-agent penetration-testing platform powered by large language
+      models, designed to run on-premise for organizations that need full control of their data.
+      It pulls together what is known about how systems get broken, reasons about a specific
+      target, and surfaces the real risks before they become incidents.`,
+    facts: [
+      'On-premise deployment',
+      'Winner, ECSO Cyber Solution Days, Cardiff',
+      'The Hack Summit 2025',
+    ],
+    link: { label: 'getfuseai.com ↗', href: links.fuseai },
+  },
+  {
+    id: 'neurality',
+    role: 'Founder · R&D',
+    name: 'Neurality',
+    body: `An AI R&D company applying signal processing and machine learning to healthcare,
+      beginning with automated hearing diagnostics. It grew out of the software built for my
+      doctorate, which is still used in clinics.`,
+    facts: ['Healthcare AI', 'Tenity / dhc Digital Health Accelerator, Batch II'],
+    link: { label: 'Announcement ↗', href: links.neurality },
+  },
+];
+
+const schema = ventures.map((v) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: v.name,
+  url: v.link.href !== '#' ? v.link.href : undefined,
+  founder: { '@type': 'Person', name: site.name, url: site.url },
+}));
+---
+
+<Base
+  title={`Ventures — ${site.name}`}
+  description="CyCommSec, FuseAI and Neurality — one company that finds weaknesses, one system that automates the finding, and one that reads medical signal."
+  schema={schema}
+>
+  <main class="wrap page">
+    <div class="rail">
+      <div class="rail__label">Three</div>
+      <div>
+        <h1 class="page-title">Ventures</h1>
+        <p class="page-intro">
+          One company that finds weaknesses, one system that automates the finding, and one that
+          reads medical signal. They are being consolidated under Suchy Group.
+        </p>
+
+        <div class="stack">
+          {
+            ventures.map((v) => (
+              <section class="venture" id={v.id}>
+                <div>
+                  <div class="venture__role">{v.role}</div>
+                  <h2>{v.name}</h2>
+                  <p>{v.body}</p>
+                </div>
+                <div class="venture__facts">
+                  {v.facts.map((f) => (
+                    <span>{f}</span>
+                  ))}
+                  <a href={v.link.href} rel="noopener" target="_blank">
+                    {v.link.label}
+                  </a>
+                </div>
+              </section>
+            ))
+          }
+        </div>
+
+        <div class="note">
+          CyCommSec, FuseAI and Neurality are being consolidated under
+          <span>Suchy Group</span>. No link yet.
+        </div>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .page {
+    padding-block: 88px 40px;
+  }
+
+  .rail__label {
+    padding-top: 14px;
+  }
+
+  .stack {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .venture {
+    background: var(--surface);
+    padding: 38px 34px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 48px;
+    scroll-margin-top: calc(var(--header-h) + 24px);
+  }
+
+  .venture__role {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 14px;
+  }
+
+  .venture h2 {
+    margin: 0 0 14px;
+    font-size: 34px;
+    letter-spacing: -0.028em;
+    font-weight: 600;
+    color: var(--ink-heading);
+  }
+
+  .venture p {
+    margin: 0;
+    max-width: 58ch;
+    color: var(--ink-body);
+  }
+
+  .venture__facts {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--nav-size);
+    color: var(--ink-faint);
+    border-left: 1px solid var(--rule);
+    padding-left: 26px;
+  }
+
+  .venture__facts a {
+    color: var(--ink-muted);
+  }
+
+  .venture__facts a:hover {
+    color: var(--ink-bright);
+  }
+
+  .note {
+    margin-top: 34px;
+    padding: 24px 26px;
+    border: 1px dashed var(--rule-strong);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
+  }
+
+  .note span {
+    color: var(--ink-muted);
+  }
+
+  @media (max-width: 900px) {
+    .page {
+      padding-block: 48px 24px;
+    }
+
+    .stack {
+      margin-top: 36px;
+    }
+
+    .venture {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+      padding: 28px 22px;
+    }
+
+    .venture__facts {
+      border-left: none;
+      border-top: 1px solid var(--rule);
+      padding-left: 0;
+      padding-top: 20px;
+    }
+  }
+</style>

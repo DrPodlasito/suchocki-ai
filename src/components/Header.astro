@@ -1,0 +1,144 @@
+---
+import { nav } from '../data/site';
+
+const path = Astro.url.pathname;
+---
+
+<header>
+  <div class="bar wrap">
+    <a class="mark" href="/" aria-label="Michał Suchocki — home">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="mark__name">Michał Suchocki</span>
+    </a>
+
+    <nav aria-label="Primary">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={['nav__item', { 'is-current': item.match.test(path) }]}
+            aria-current={item.match.test(path) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <span class="nav__divider" aria-hidden="true"></span>
+      <div class="lang">
+        <span class="lang__on">EN</span>
+        <span class="lang__slash" aria-hidden="true">/</span>
+        <a class="lang__off" href="/pl/" hreflang="pl" lang="pl">PL</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--header-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .bar {
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .mark {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    flex: 0 0 auto;
+  }
+
+  .dot {
+    display: block;
+    width: 11px;
+    height: 11px;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+  }
+
+  .mark__name {
+    font-size: 14.5px;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .nav__item {
+    font-family: var(--font-mono);
+    font-size: var(--nav-size);
+    letter-spacing: var(--nav-tracking);
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    white-space: nowrap;
+  }
+
+  .nav__item.is-current,
+  .nav__item:hover {
+    color: var(--ink);
+  }
+
+  .nav__item:hover {
+    color: var(--ink-bright);
+  }
+
+  .nav__divider {
+    display: block;
+    width: 1px;
+    height: 16px;
+    background: var(--divider);
+  }
+
+  .lang {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .lang__on {
+    color: var(--ink);
+  }
+
+  .lang__slash {
+    color: var(--ink-ghost);
+  }
+
+  .lang__off {
+    color: var(--ink-faint);
+  }
+
+  /* Below the desktop breakpoint the nav wraps to a second row rather than
+     collapsing into a hamburger — five short items fit comfortably. */
+  @media (max-width: 860px) {
+    .bar {
+      height: auto;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      padding-block: 14px;
+    }
+
+    nav {
+      flex-wrap: wrap;
+      gap: 16px 18px;
+    }
+  }
+</style>

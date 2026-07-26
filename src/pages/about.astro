@@ -1,0 +1,276 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, links } from '../data/site';
+
+const publications = [
+  {
+    title:
+      'Classification of auditory brainstem response using wavelet decomposition and SVM network',
+    meta: 'Biocybernetics and Biomedical Engineering 36(2), 2016, 427–436 · DOI 10.1016/j.bbe.2016.01.003',
+  },
+  {
+    title:
+      'Klasyfikacja słuchowych potencjałów wywołanych w oparciu o dekompozycję falkową i sieć SVM',
+    meta: 'Biuletyn WAT LXIV(4), 2015, 117–129',
+  },
+  {
+    title: 'Computer analysis of auditory brainstem evoked potentials',
+    meta: 'IEEE SPA, 2011, 132–137',
+  },
+  {
+    title:
+      'Doctoral dissertation — classification of auditory brainstem evoked potentials based on wavelet decomposition and the support vector machine',
+    meta: 'WAT, 2018 · clinically validated, 97% accuracy',
+  },
+];
+
+const credentials = [
+  'dr inż. — WAT, 2018',
+  'ISO 42001 lead auditor',
+  'Contributing author, Forbes Poland',
+  '17+ years in ICT and cybersecurity',
+];
+---
+
+<Base
+  title={`About — ${site.name}`}
+  description="Samsung, Huawei, Cybercom, Cyberteq, Accenture, Detecon, Philip Morris International — and a doctorate in biomedical signal processing. The long version."
+>
+  <main class="wrap page">
+    <div class="rail">
+      <div class="rail__label">About</div>
+      <div>
+        <div class="top">
+          <div>
+            <h1>I take the thing apart to see how it works</h1>
+            <p class="kicker">
+              I have been since I was a child, occasionally to my parents' alarm.
+            </p>
+          </div>
+          <div class="portrait" role="img" aria-label="Portrait placeholder">
+            <span>portrait — same shoot as home</span>
+          </div>
+        </div>
+
+        <div class="split">
+          <div class="prose">
+            <p>
+              The years between engineering school and running my own company were a long
+              apprenticeship in how technology actually reaches the world. I started at Samsung,
+              running field tests on the first Galaxy phones. I moved to Huawei as a product
+              manager and helped launch one of the first commercial LTE networks. I learned
+              consultancy at Cybercom, building up telecom, automotive and IoT practices, and then
+              ran a region for them out of Dubai.
+            </p>
+            <p>
+              I co-founded and helped lead Cyberteq across the Middle East and Africa — work that,
+              at one point, had me helping run cyber-awareness sessions for schoolchildren in
+              Kigali. I did technology strategy at Accenture, consulting at Detecon, and I have
+              spent several years as a senior information-security and generative-AI architect
+              advising Philip Morris International. Telecom, automotive, healthcare, critical
+              infrastructure, consumer products: I have seen how each of them breaks.
+            </p>
+            <p>
+              I still teach — at WAT, at AGH in Kraków, and at the SGH Warsaw School of Economics.
+              I write and speak about this in public when I can be useful, because the gap between
+              what practitioners know and what decision-makers assume is, itself, a vulnerability.
+            </p>
+            <p class="last">I work in Polish and English, from Warsaw.</p>
+          </div>
+
+          <div class="side">
+            <div>
+              <div class="side__head">Credentials</div>
+              <div class="side__list">
+                {credentials.map((c) => <span>{c}</span>)}
+              </div>
+            </div>
+            <div>
+              <div class="side__head">Contact</div>
+              <div class="side__list side__list--mono">
+                <a class="link-underline" href={`mailto:${site.email}`}>{site.email}</a>
+                <a class="side__muted" href={links.linkedin} rel="me noopener" target="_blank">
+                  LinkedIn ↗
+                </a>
+                <a class="side__muted" href={links.x} rel="me noopener" target="_blank">X ↗</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section id="publications" class="pubs">
+          <div class="eyebrow">Publications</div>
+          <div>
+            {
+              publications.map((p) => (
+                <div class="pub">
+                  <div class="pub__title">{p.title}</div>
+                  <div class="pub__meta">{p.meta}</div>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .page {
+    padding-block: 88px 40px;
+  }
+
+  .rail__label {
+    padding-top: 14px;
+  }
+
+  .top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 56px;
+    align-items: start;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: var(--size-about-title);
+    line-height: 1.02;
+    letter-spacing: -0.032em;
+    font-weight: 600;
+  }
+
+  .kicker {
+    margin: 24px 0 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--ink-faint);
+  }
+
+  .portrait {
+    aspect-ratio: 4 / 5;
+    border: 1px solid var(--rule-strong);
+    background-image: repeating-linear-gradient(
+      135deg,
+      var(--surface-hover) 0 7px,
+      var(--surface) 7px 14px
+    );
+    display: flex;
+    align-items: flex-end;
+    padding: 14px;
+  }
+
+  .portrait span {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .split {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .prose {
+    max-width: var(--prose);
+    font-size: 18px;
+    line-height: 1.72;
+    color: var(--ink-body);
+  }
+
+  .prose p {
+    margin: 0 0 22px;
+  }
+
+  .prose p.last {
+    margin-bottom: 0;
+  }
+
+  .side {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+
+  .side__head {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule-strong);
+  }
+
+  .side__list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 14px;
+    font-size: 14.5px;
+    color: var(--ink-muted);
+    line-height: 1.45;
+  }
+
+  .side__list--mono {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+  }
+
+  .side__muted {
+    color: var(--ink-muted);
+  }
+
+  .pubs {
+    margin-top: 64px;
+    padding-top: 22px;
+    border-top: 1px solid var(--rule-strong);
+    scroll-margin-top: calc(var(--header-h) + 24px);
+  }
+
+  .pubs .eyebrow {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .pub {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+    max-width: 80ch;
+  }
+
+  .pub__title {
+    font-size: 16.5px;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+
+  .pub__meta {
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: var(--nav-size);
+    color: var(--ink-faint);
+  }
+
+  @media (max-width: 900px) {
+    .page {
+      padding-block: 48px 24px;
+    }
+
+    .top,
+    .split {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+
+    .portrait {
+      max-width: 260px;
+    }
+  }
+</style>

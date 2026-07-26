@@ -1,0 +1,150 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+
+const talks = [
+  {
+    title: 'FuseAI: a multi-agent system for penetration-testing automation',
+    meta: 'The Hack Summit, Warsaw · 2025',
+  },
+  { title: 'Speaker — CYBERSEC CEE Expo & Forum', meta: 'Kraków · 2024, 2025' },
+  { title: 'Panelist — Cyber24 Day', meta: 'Warsaw' },
+  { title: 'Cyber offense in risk management', meta: 'AGH Cyber Kampus · Dec 2023' },
+  { title: 'Cyberteq at GISEC', meta: 'Dubai · 2019' },
+];
+
+const lectures = [
+  { where: 'WAT · Warsaw', what: 'Cybersecurity; theory of computation and simulation' },
+  { where: 'AGH · Kraków', what: 'Penetration testing; security of critical infrastructure and OT' },
+  { where: 'SGH · Warsaw', what: 'AI in cybersecurity' },
+];
+
+const media = [
+  {
+    title: 'Cybersecurity: not only defence, but also attack',
+    meta: 'CYBERSEC CEE · 2024 · video',
+  },
+  { title: 'Cybersecurity in Poland and the world', meta: 'Biznes Focus · video' },
+  { title: 'AI for hearing-loss diagnostics', meta: 'Neurality · video' },
+  { title: 'Why children should be aware of cyber crimes', meta: 'Rwanda Inspirer · 2018' },
+];
+---
+
+<Base
+  title={`Speaking — ${site.name}`}
+  description="Conferences, university lectures, and interviews — in Polish and English, from Warsaw."
+>
+  <main class="wrap page">
+    <div class="rail">
+      <div class="rail__label">Record</div>
+      <div>
+        <h1 class="page-title">Speaking</h1>
+        <p class="page-intro">
+          Conferences, lectures, and interviews — in Polish and English, from Warsaw.
+        </p>
+
+        <section class="block block--first">
+          <div class="group-head">Talks & panels</div>
+          <div class="row-list">
+            {
+              talks.map((t) => (
+                <div class="row">
+                  <span class="row__title">{t.title}</span>
+                  <span class="row__meta">{t.meta}</span>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+
+        <section class="block">
+          <div class="group-head">Lectures</div>
+          <div class="lectures">
+            {
+              lectures.map((l) => (
+                <div class="lecture">
+                  <div class="lecture__where">{l.where}</div>
+                  <div class="lecture__what">{l.what}</div>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+
+        <section class="block">
+          <div class="group-head">Interviews & media</div>
+          <div class="row-list">
+            {
+              media.map((m) => (
+                <div class="row">
+                  <span class="row__title">{m.title}</span>
+                  <span class="row__meta">{m.meta}</span>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .page {
+    padding-block: 88px 40px;
+  }
+
+  .rail__label {
+    padding-top: 14px;
+  }
+
+  .page-intro {
+    max-width: 60ch;
+  }
+
+  .block {
+    margin-top: 52px;
+  }
+
+  .block--first {
+    margin-top: 56px;
+  }
+
+  .lectures {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    padding-top: 22px;
+  }
+
+  .lecture {
+    border: 1px solid var(--rule-strong);
+    background: var(--surface);
+    padding: 24px 22px;
+  }
+
+  .lecture__where {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 12px;
+  }
+
+  .lecture__what {
+    font-size: 16.5px;
+    color: var(--ink-heading);
+    line-height: 1.4;
+  }
+
+  @media (max-width: 900px) {
+    .page {
+      padding-block: 48px 24px;
+    }
+
+    .lectures {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

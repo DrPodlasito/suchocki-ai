@@ -1,0 +1,78 @@
+---
+/**
+ * The ABR waveform strip under the hero. Bar heights are the exact sequence
+ * from the mockup — an auditory brainstem response, which is the signal the
+ * doctorate taught a machine to read. Decorative, so it's hidden from AT.
+ */
+const seq = [
+  7, 13, 9, 21, 15, 34, 26, 44, 31, 19, 11, 17, 24, 38, 29, 41, 22, 14, 9, 16,
+  27, 35, 20, 12, 8, 18, 30, 23, 15, 10, 25, 33, 19, 11, 7, 14,
+];
+const bars = seq.map((h) => ({ h, o: (0.28 + (h / 44) * 0.5).toFixed(3) }));
+---
+
+<div class="signal" data-reveal aria-hidden="true">
+  <div class="bars">
+    {bars.map((b) => <span style={`height:${b.h}px;opacity:${b.o}`} />)}
+  </div>
+  <span class="caption">
+    auditory brainstem response · the first signal I taught a machine to read
+  </span>
+</div>
+
+<style>
+  .signal {
+    transition-delay: 0.26s;
+    height: 46px;
+    margin-top: 64px;
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+  }
+
+  .bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    animation: sigDrift 9s ease-in-out infinite;
+  }
+
+  .bars span {
+    display: block;
+    width: 2px;
+    background-color: var(--ink);
+  }
+
+  .caption {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-ghost);
+    transform: translateY(-2px);
+  }
+
+  @keyframes sigDrift {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (max-width: 700px) {
+    .signal {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      height: auto;
+    }
+
+    .caption {
+      max-width: 34ch;
+      line-height: 1.6;
+    }
+  }
+</style>

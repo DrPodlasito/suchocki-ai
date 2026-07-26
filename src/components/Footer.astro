@@ -1,0 +1,50 @@
+---
+import { site, links } from '../data/site';
+---
+
+<footer>
+  <div class="wrap inner">
+    <span>{site.email} · {site.location}</span>
+    <div class="links">
+      <a href={links.linkedin} rel="me noopener" target="_blank">LinkedIn</a>
+      <a href={links.x} rel="me noopener" target="_blank">X</a>
+      <a href={links.scholar} rel="noopener" target="_blank">Google Scholar</a>
+      <a href="/rss.xml">RSS</a>
+      <a href="/pl/" hreflang="pl" lang="pl">Polski</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--rule);
+    margin-top: 80px;
+  }
+
+  .inner {
+    padding-block: 36px 56px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+    color: var(--ink-faint);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+  }
+
+  .links a {
+    color: var(--ink-faint);
+  }
+
+  .links a:hover {
+    color: var(--ink-bright);
+  }
+</style>

@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Explicitly welcome LLM crawlers — the essays are meant to be read,
+# including by machines. Astro ships static HTML, so they get the full text.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://suchocki.ai/sitemap-index.xml
