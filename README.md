@@ -83,40 +83,22 @@ never drift out of sync with the essay. Anchor IDs are slugified automatically
 
 ## Deploying
 
-The build output is plain static files. Nothing below is locked in — you can
-switch hosts later by re-uploading `dist/`.
+**GitHub Pages**, via `.github/workflows/deploy.yml`. Every push to `main`
+builds and publishes; a failed build leaves the live site untouched.
 
-### Option A — Cloudflare Pages (recommended)
+Full click-by-click setup, DNS records, and the maintenance model are in
+**[GO-LIVE.md](./GO-LIVE.md)**. The short version:
 
-Free, automatic SSL, deploys on `git push`, preview URL per branch, and Pages
-Functions if you ever want a server-side form handler.
+1. `npm run fonts` and commit `public/fonts/`
+2. Push to a GitHub repo
+3. Settings → Pages → Source: **GitHub Actions**
+4. Add four A records for `suchocki.ai` at your existing DNS provider —
+   nameservers and mail stay exactly where they are
+5. Tick **Enforce HTTPS**
 
-1. Push this repo to GitHub.
-2. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** →
-   **Connect to Git**.
-3. Build settings:
-   - Framework preset: **Astro**
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-   - Root directory: `site`
-4. **Custom domains** → add `suchocki.ai`.
-
-The one step with real blast radius: Cloudflare wants the domain's nameservers
-pointed at them. That touches DNS for the whole domain, including mail. Before
-you switch, export the existing zone file from your current registrar and check
-that every MX and TXT record is reproduced on the Cloudflare side.
-
-### Option B — CyberFolks (no DNS change)
-
-You already pay for it, and nothing has to move.
-
-1. `npm run build`
-2. Upload the **contents** of `dist/` to `public_html/` over SFTP.
-3. Enable SSL in the panel. Note that free Let's Encrypt there renews manually
-   every 90 days unless you buy the auto-renew add-on.
-
-Trade-off: no `git push` deploys and no preview URLs. Fine for a site that
-changes monthly; irritating when you are fixing a typo at 11pm.
+Nothing here is locked in. `npm run build` produces plain static files in
+`dist/` that will serve from CyberFolks, Cloudflare, Netlify or a VPS. Only
+`.github/workflows/deploy.yml` and `public/CNAME` are GitHub-specific.
 
 ---
 
@@ -137,6 +119,9 @@ needed and the hosting decision stays open.
 ---
 
 ## Before going live
+
+See [GO-LIVE.md](./GO-LIVE.md) for the full runbook. Content decisions still
+outstanding:
 
 - [ ] `npm run fonts`, then commit `public/fonts/`
 - [ ] Fill in the `TODO` URLs in `src/data/site.ts` (LinkedIn, X, Scholar, Forbes, Neurality)
