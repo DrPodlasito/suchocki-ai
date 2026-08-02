@@ -28,13 +28,17 @@ export const nav = [
   { label: 'About', href: '/about/', match: /^\/about/ },
 ];
 
+/**
+ * Outbound links. A value of '#' means the URL is not filled in yet — the link
+ * still renders, it just goes nowhere. Replace them as they're confirmed.
+ */
 export const links = {
-  linkedin: 'https://www.linkedin.com/in/michalsuchocki/', // TODO verify handle
-  x: '#', // TODO
-  scholar: '#', // TODO
-  forbes: '#', // TODO Forbes Poland author page
+  linkedin: 'https://www.linkedin.com/in/michalsuchocki/',
+  x: '#',
+  scholar: '#',
+  forbes: '#',
   cycommsec: 'https://cycommsec.com',
   fuseai: 'https://getfuseai.com',
-  neurality: '#', // TODO
+  neurality: '#',
   ieee: 'https://doi.org/10.1016/j.bbe.2016.01.003',
 };

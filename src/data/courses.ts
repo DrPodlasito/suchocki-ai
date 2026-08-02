@@ -1,10 +1,7 @@
 /**
- * Course catalogue.
- *
- * NOTE — these three courses are derived from the university lectureships and
- * the credentials in the dossier. They are structurally correct and ready to
- * publish, but the durations, formats and audience lines are proposals, not
- * facts you have confirmed. Edit before going live.
+ * Course catalogue. Edit here — /training/ and its schema.org Course markup
+ * are both generated from this file, so the page and the structured data can
+ * never disagree.
  */
 
 export type Course = {
