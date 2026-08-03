@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // Change this once the domain is live. Everything canonical,
 // the sitemap and the RSS feed derive from it.
-export const SITE = 'https://suchocki.ai';
+export const SITE = 'https://michalsuchocki.com';
 
 export default defineConfig({
   site: SITE,

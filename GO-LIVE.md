@@ -69,10 +69,10 @@ now, not while the domain is half-migrated.
 This is the step that touches live infrastructure, so read it twice.
 
 **What you are changing:** four A records and one CNAME. **What you are not
-changing:** nameservers, MX records, SPF/DKIM/DMARC. Mail on `suchocki.ai` is
+changing:** nameservers, MX records, SPF/DKIM/DMARC. Mail on `michalsuchocki.com` is
 untouched. That is the entire reason we picked GitHub Pages over Cloudflare.
 
-In your DNS provider's panel (CyberFolks, or wherever `suchocki.ai` is managed):
+In your DNS provider's panel (CyberFolks, or wherever `michalsuchocki.com` is managed):
 
 | Type | Name | Value |
 |---|---|---|
@@ -88,7 +88,7 @@ wrong you want to be able to put it back exactly, not from memory.
 If an A record already exists on `@` pointing somewhere else, note where it
 points before you replace it. Something may be using it.
 
-Then GitHub → **Settings** → **Pages** → **Custom domain** → `suchocki.ai` →
+Then GitHub → **Settings** → **Pages** → **Custom domain** → `michalsuchocki.com` →
 Save. GitHub verifies the DNS, which usually takes minutes but the propagation
 window is up to 24 hours.
 
@@ -106,12 +106,12 @@ grey after an hour, DNS has not propagated yet. Wait, don't fiddle.
 
 ## 6. Verify (5 min)
 
-- [ ] `https://suchocki.ai` loads, and `http://` redirects to it
-- [ ] `https://www.suchocki.ai` redirects to the apex
+- [ ] `https://michalsuchocki.com` loads, and `http://` redirects to it
+- [ ] `https://www.michalsuchocki.com` redirects to the apex
 - [ ] The fonts render — text should be Instrument Sans, not the system font
-- [ ] `https://suchocki.ai/rss.xml` returns XML
-- [ ] `https://suchocki.ai/sitemap-index.xml` exists
-- [ ] Paste `https://suchocki.ai/training/` into
+- [ ] `https://michalsuchocki.com/rss.xml` returns XML
+- [ ] `https://michalsuchocki.com/sitemap-index.xml` exists
+- [ ] Paste `https://michalsuchocki.com/training/` into
       [Google's Rich Results Test](https://search.google.com/test/rich-results)
       — it should find three `Course` items
 - [ ] Paste the home page in — it should find `Person`

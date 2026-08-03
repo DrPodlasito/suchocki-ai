@@ -8,9 +8,10 @@ export const site = {
   title: 'Michał Suchocki — offensive security & AI',
   description:
     'dr inż. Michał Suchocki — CEO and co-founder of CyCommSec, creator of FuseAI, ISO 42001 lead auditor. Offensive security, applied AI, and training. Warsaw.',
-  url: 'https://suchocki.ai',
+  url: 'https://michalsuchocki.com',
   locale: 'en',
   location: 'Warsaw',
+  // Deliberately on suchocki.ai — that mailbox is on the active mail server.
   email: 'michal@suchocki.ai',
   roles: [
     'dr inż.',

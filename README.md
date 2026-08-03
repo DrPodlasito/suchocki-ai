@@ -1,4 +1,4 @@
-# suchocki.ai
+# michalsuchocki.com
 
 Personal site — built with [Astro](https://astro.build) (MIT, free), output as
 static HTML with **zero JavaScript** on every page except the small inline
@@ -92,7 +92,7 @@ Full click-by-click setup, DNS records, and the maintenance model are in
 1. `npm run fonts` and commit `public/fonts/`
 2. Push to a GitHub repo
 3. Settings → Pages → Source: **GitHub Actions**
-4. Add four A records for `suchocki.ai` at your existing DNS provider —
+4. Add four A records for `michalsuchocki.com` at your existing DNS provider —
    nameservers and mail stay exactly where they are
 5. Tick **Enforce HTTPS**
 
