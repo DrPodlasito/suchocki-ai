@@ -17,3 +17,7 @@ pnpm-debug.log*
 
 # macOS
 .DS_Store
+
+# DNS zone backups — kept locally only. The repo is public and there is no
+# reason to publish a map of the mail and hosting infrastructure.
+dns-backup-*.txt
