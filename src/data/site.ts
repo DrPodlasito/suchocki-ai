@@ -31,7 +31,7 @@ export const nav = [
 
 /** Outbound profiles and sources from the project dossier. */
 export const links = {
-  linkedin: 'https://www.linkedin.com/in/michalsuchocki/',
+  linkedin: 'https://www.linkedin.com/in/suchockimichal/',
   scholar: 'https://scholar.google.com/citations?user=_n21VVcAAAAJ&hl=en',
   forbes: 'https://www.forbes.pl/autorzy/michal-suchocki',
   cycommsec: 'https://cycommsec.com',
