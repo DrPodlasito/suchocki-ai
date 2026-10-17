@@ -37,8 +37,35 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: 'Instrument Sans';
+  src: url('/fonts/instrument-sans-latin-ext-variable.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-017F;
+}
+
+@font-face {
+  font-family: 'Instrument Sans';
+  src: url('/fonts/instrument-sans-italic-latin-ext-variable.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0100-017F;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/jetbrains-mono-latin-ext-variable.woff2') format('woff2');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-017F;
+}
+
 html {
-  scroll-behaviour: smooth;
+  color-scheme: dark;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 24px);
 }
@@ -107,6 +134,8 @@ img {
 }
 
 .rail__label {
+  margin: 0;
+  font-weight: 400;
   font-family: var(--font-mono);
   font-size: var(--eyebrow-size);
   letter-spacing: var(--eyebrow-tracking);
@@ -170,6 +199,20 @@ img {
   flex-direction: column;
 }
 
+.action-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  margin-top: 28px;
+}
+
+.action-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border-bottom: 1px solid var(--rule-accent);
+}
+
 /* A titled row with right-aligned metadata — talks, media, essays. */
 .row {
   display: flex;
@@ -201,30 +244,34 @@ img {
   border-bottom: 1px solid var(--rule-strong);
 }
 
-/* --- Reveal on scroll ----------------------------------------------------- */
-
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity var(--reveal-duration) var(--ease-out),
-    transform var(--reveal-duration) var(--ease-out);
+/* Content remains visible when JavaScript is disabled or fails. */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  padding: 12px 18px;
+  background: var(--ink);
+  color: var(--field);
+  transform: translateY(-180%);
 }
 
-[data-reveal].is-visible {
-  opacity: 1;
+.skip-link:focus {
   transform: translateY(0);
+  color: var(--field);
+}
+
+:target {
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+
+a[href^='mailto:'] {
+  overflow-wrap: anywhere;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  [data-reveal] {
-    opacity: 1;
-    transform: none;
-    transition: none;
   }
 
   *,

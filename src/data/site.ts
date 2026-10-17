@@ -1,6 +1,6 @@
 /**
  * Single source of truth for identity, navigation and outbound links.
- * Placeholder URLs are marked TODO — everything else is confirmed.
+ * Only publish links with a known destination.
  */
 
 export const site = {
@@ -11,6 +11,7 @@ export const site = {
   url: 'https://michalsuchocki.com',
   locale: 'en',
   location: 'Warsaw',
+  portrait: '/images/michal-suchocki-bw.jpg',
   // Deliberately on suchocki.ai — that mailbox is on the active mail server.
   email: 'michal@suchocki.ai',
   roles: [
@@ -29,17 +30,23 @@ export const nav = [
   { label: 'About', href: '/about/', match: /^\/about/ },
 ];
 
-/**
- * Outbound links. A value of '#' means the URL is not filled in yet — the link
- * still renders, it just goes nowhere. Replace them as they're confirmed.
- */
+/** Outbound profiles and sources from the project dossier. */
 export const links = {
-  linkedin: 'https://www.linkedin.com/in/michalsuchocki/',
-  x: '#',
-  scholar: '#',
-  forbes: '#',
+  linkedin: 'https://www.linkedin.com/in/suchockimichal/',
+  scholar: 'https://scholar.google.com/citations?user=_n21VVcAAAAJ&hl=en',
+  forbes: 'https://www.forbes.pl/autorzy/michal-suchocki',
   cycommsec: 'https://cycommsec.com',
   fuseai: 'https://getfuseai.com',
-  neurality: '#',
+  neurality: 'https://www.youtube.com/watch?v=dEYQ0lQxG2Q',
   ieee: 'https://doi.org/10.1016/j.bbe.2016.01.003',
 };
+
+export type Locale = 'en' | 'pl';
+
+export const polishNav = [
+  { label: 'O mnie', href: '/pl/#o-mnie' },
+  { label: 'Projekty', href: '/pl/#projekty' },
+  { label: 'Publikacje', href: '/pl/#publikacje' },
+  { label: 'Wystąpienia', href: '/pl/#wystapienia' },
+  { label: 'Kontakt', href: '/pl/#kontakt' },
+];

@@ -1,149 +1,85 @@
 # michalsuchocki.com
 
-Personal site — built with [Astro](https://astro.build) (MIT, free), output as
-static HTML with **zero JavaScript** on every page except the small inline
-reveal-on-scroll script.
+Personal website built with Astro. This repository serves **michalsuchocki.com**;
+**suchocki.ai** is a separate brand and domain.
 
-Translated from the Claude Design mockup (`Michal Suchocki Site.dc.html`),
-achromatic as designed. The 311 inline styles in that export are normalised
-into `src/styles/tokens.css` — that file is the single place to change colour,
-type scale or spacing.
+## Development
 
----
+Use Node.js 22 LTS or a newer supported LTS release.
 
-## Running it
-
-```bash
-cd site
-npm install
-npm run fonts     # downloads the two webfonts into public/fonts/ — do this once
-npm run dev       # http://localhost:4321
-npm run build     # → dist/
-npm run preview   # serve dist/ locally to check the real output
+```sh
+npm ci
+npm run dev
+npm run check
+npm run build
+python3 scripts/check_site.py
+npm run preview
 ```
 
-`npm run fonts` is optional. Without it the site still builds and renders; it
-just falls back to `system-ui` and the platform monospace.
-
----
+Fonts are self-hosted in `public/fonts/`. The optional `npm run fonts` command
+refreshes them; a regular build does not contact Google Fonts.
 
 ## Structure
 
-```
-src/
-  content/essays/*.mdx     one file per essay — this is where you write
-  content.config.ts        the essay schema; a missing date fails the build
-  data/site.ts             identity, nav, outbound links
-  data/courses.ts          the training catalogue
-  layouts/Base.astro       <head>, JSON-LD, header/footer, reveal script
-  components/              Header, Footer, Signal (the ABR waveform)
-  pages/                   one file per route
-  styles/tokens.css        ← every design value lives here
-  styles/global.css        reset, fonts, shared primitives
-```
+- `src/data/site.ts`: identity, contact details, navigation and profile links.
+- `src/data/person.ts`: the shared Person schema with a stable identity URL.
+- `src/pages/index.astro`: English home page.
+- `src/pages/pl/index.astro`: Polish personal profile, projects, publications,
+  speaking and contact. Links to English detail pages are labelled accordingly.
+- `src/pages/about.astro`, `ventures.astro`, `speaking.astro`, `training.astro`:
+  English detail pages. Training describes teaching topics, without unconfirmed
+  course durations, prices, or scheduled sessions.
+- `src/content/essays/`: essays in MDX. `draft: true` entries are excluded from
+  the production site, writing index and RSS. Draft source remains visible in
+  the Git repository, so never use it for private material.
+- `src/components/Contact.astro`: shared English and Polish contact section.
+- `src/styles/tokens.css`: colours, typography and spacing.
+- `public/social-card.svg`: source artwork for the 1200×630 PNG social card.
 
-### Routes
+The English and Polish home pages are language alternatives. English essays
+only claim an English version until a real translated route is published.
 
-| URL | Source |
-|---|---|
-| `/` | `pages/index.astro` |
-| `/writing/` | `pages/writing/index.astro` |
-| `/writing/<slug>/` | `pages/writing/[...slug].astro` |
-| `/training/` | `pages/training.astro` |
-| `/ventures/` | `pages/ventures.astro` |
-| `/speaking/` | `pages/speaking.astro` |
-| `/about/` | `pages/about.astro` |
-| `/pl/` | `pages/pl/index.astro` — placeholder |
-| `/rss.xml`, `/sitemap-index.xml`, `/404` | generated |
+## Deployment
 
----
+Cloudflare Pages project **michalsuchocki** is connected to
+**DrPodlasito/suchocki-ai**, with production branch **main**.
 
-## Writing an essay
+- Build command: `npm run build`
+- Output directory: `dist`
+- Custom domains: `michalsuchocki.com` and `www.michalsuchocki.com`
+- Branch builds can provide a preview before a production merge.
 
-Drop a `.mdx` file in `src/content/essays/`. The filename becomes the URL.
+Cloudflare hosts the website. Email is managed separately; its provider is not
+changed by a site build. See [GO-LIVE.md](GO-LIVE.md) for release and rollback.
+
+## Publishing an essay
+
+Create an MDX file in `src/content/essays/`:
 
 ```yaml
 ---
-title: Defence alone is a losing posture
-summary: One or two sentences. Used on the index, in RSS, and as the meta description.
-date: 2026-07-01
-readingMinutes: 11
-languages: [EN, PL]     # drives the "EN / PL" badge
-notes:                  # optional numbered footnotes; <sup>1</sup> in the body
-  - First note.
-draft: false            # true → visible in dev, absent from production
+title: A specific title
+summary: One or two sentences about the argument.
+date: 2026-10-17
+readingMinutes: 5
+languages: [EN]
+draft: true
 ---
 ```
 
-The contents rail on the left builds itself from the `##` headings, so it can
-never drift out of sync with the essay. Anchor IDs are slugified automatically
-(`## The match analogy` → `#the-match-analogy`).
+Preview the draft locally, review its text and sources, then set `draft: false`.
+Run the checks above and publish through a reviewed pull request. Set language
+badges only for translations that actually exist.
 
----
+## Verification
 
-## Deploying
+`npm run check` validates Astro templates and TypeScript. `npm run build`
+generates the production output. `scripts/check_site.py` checks that all local
+links, fragments and assets resolve, each page has a language and a single main
+heading, and public pages contain no empty links or leftover placeholders.
+The GitHub workflow runs these checks on pull requests and pushes.
 
-**GitHub Pages**, via `.github/workflows/deploy.yml`. Every push to `main`
-builds and publishes; a failed build leaves the live site untouched.
-
-Full click-by-click setup, DNS records, and the maintenance model are in
-**[GO-LIVE.md](./GO-LIVE.md)**. The short version:
-
-1. `npm run fonts` and commit `public/fonts/`
-2. Push to a GitHub repo
-3. Settings → Pages → Source: **GitHub Actions**
-4. Add four A records for `michalsuchocki.com` at your existing DNS provider —
-   nameservers and mail stay exactly where they are
-5. Tick **Enforce HTTPS**
-
-Nothing here is locked in. `npm run build` produces plain static files in
-`dist/` that will serve from CyberFolks, Cloudflare, Netlify or a VPS. Only
-`.github/workflows/deploy.yml` and `public/CNAME` are GitHub-specific.
-
----
-
-## Wiring the enquiry form
-
-`/training/` currently ends in a `mailto:` link. It works, but enquiries land
-in your inbox rather than the CRM.
-
-To route them into HubSpot instead:
-
-1. HubSpot → Marketing → Forms → create a form → **Embed**.
-2. Paste the embed snippet into `src/pages/training.astro`, replacing the block
-   marked `TODO` in the `#enquire` section.
-
-This works on either host — HubSpot handles the submission, so no backend is
-needed and the hosting decision stays open.
-
----
-
-## Before going live
-
-See [GO-LIVE.md](./GO-LIVE.md) for the full runbook. Content decisions still
-outstanding:
-
-- [ ] `npm run fonts`, then commit `public/fonts/`
-- [ ] Fill in the `TODO` URLs in `src/data/site.ts` (LinkedIn, X, Scholar, Forbes, Neurality)
-- [ ] Review `src/data/courses.ts` — the durations, formats and audiences are
-      proposals derived from your lectureships, not facts you confirmed
-- [ ] Replace the portrait placeholder on `/about/`
-- [ ] Finish or delete `signal-in-noise-twice.mdx` (currently `draft: true`)
-- [ ] Decide whether `/pl/` stays a placeholder or gets real content
-- [ ] Confirm `site` in `astro.config.mjs` matches the live domain — canonical
-      URLs, the sitemap and RSS all derive from it
-
----
-
-## Structured data
-
-Three schema.org types are emitted, which is more than most consultant sites do:
-
-- `Person` on `/` — the input Google uses for a Knowledge Panel
-- `Course` × 3 on `/training/` — makes the training eligible for course-specific
-  search results
-- `BlogPosting` on each essay
-- `Organization` × 3 on `/ventures/`
-
-Validate after deploying at
-[search.google.com/test/rich-results](https://search.google.com/test/rich-results).
+Before publishing, inspect desktop and mobile layouts, keyboard navigation,
+the English/Polish switch, contact links, and social metadata. External sites
+may restrict automated access; their identity and link targets need a separate
+review.

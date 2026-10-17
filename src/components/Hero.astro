@@ -1,0 +1,132 @@
+---
+import Portrait from './Portrait.astro';
+import Signal from './Signal.astro';
+import NeuralBackground from './NeuralBackground.astro';
+import { links, site, type Locale } from '../data/site';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'en' } = Astro.props;
+const pl = lang === 'pl';
+const roles = pl
+  ? ['dr inż.', 'CEO i współzałożyciel CyCommSec', 'twórca FuseAI']
+  : site.roles;
+---
+
+<section class="section hero">
+  <NeuralBackground lang={lang} />
+  <div class="wrap hero__inner">
+    <p class="hero__eyebrow eyebrow">
+      {pl ? 'Warszawa · Cyberbezpieczeństwo i AI' : 'Warsaw · Offensive security & AI'}
+    </p>
+    <h1 class="hero__title">Michał<br />Suchocki.</h1>
+    <div class="hero__portrait"><Portrait priority /></div>
+    <p class="hero__roles">
+      {roles.map((role, i) => <>
+        {i > 0 && <span class="dot" aria-hidden="true">·</span>}
+        <span>{role}</span>
+      </>)}
+    </p>
+    <p class="hero__intro">
+      {pl
+        ? 'Łączę inżynierię, cyberbezpieczeństwo i sztuczną inteligencję. Buduję systemy i pomagam zrozumieć, jak działają.'
+        : 'I build at the intersection of engineering, cybersecurity, and artificial intelligence.'}
+    </p>
+    <div class="action-links">
+      <a href={pl ? '#kontakt' : '#contact'}>{pl ? 'Napisz do mnie' : 'Get in touch'}</a>
+      {pl
+        ? <a href={links.linkedin} target="_blank" rel="me noopener">Poznaj mnie na LinkedIn ↗</a>
+        : <a href="/writing/">Read my work</a>}
+    </div>
+    <div class="hero__signal">
+      {pl
+        ? <Signal caption="Słuchowe potencjały wywołane — od tego sygnału zaczęły się moje badania" />
+        : <Signal />}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; isolation: isolate; overflow: hidden; }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(240px, 27vw, 320px);
+    column-gap: clamp(40px, 6vw, 88px);
+    padding-block: 76px 62px;
+    align-items: start;
+  }
+
+  .hero__eyebrow {
+    grid-column: 1 / -1;
+    color: var(--ink);
+    margin: 0 0 38px;
+  }
+
+  .hero__title {
+    grid-column: 1;
+    margin: 0;
+    font-size: var(--size-hero);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    font-weight: 600;
+  }
+
+  .hero__portrait {
+    grid-column: 2;
+    grid-row: 2 / span 4;
+  }
+
+  .hero__roles {
+    grid-column: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin: 28px 0 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+
+  .dot { color: var(--ink-faint); }
+
+  .hero__intro {
+    grid-column: 1;
+    max-width: 48ch;
+    color: var(--ink-body);
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.45;
+    margin: 26px 0 0;
+  }
+
+  .action-links { grid-column: 1; }
+  .hero__signal { grid-column: 1 / -1; }
+
+  @media (max-width: 900px) {
+    .hero__inner {
+      grid-template-columns: minmax(0, 1fr) 220px;
+      column-gap: 32px;
+      padding-block: 48px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .hero__inner {
+      grid-template-columns: minmax(0, 1fr) clamp(88px, 24vw, 144px);
+      column-gap: 16px;
+    }
+
+    .hero__eyebrow { margin-bottom: 28px; }
+    .hero__portrait { grid-row: 2; }
+    .hero__roles, .hero__intro, .action-links { grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 360px) {
+    .hero__inner { grid-template-columns: minmax(0, 1fr) 72px; column-gap: 12px; }
+    .hero__title { font-size: 42px; }
+  }
+</style>

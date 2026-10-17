@@ -1,19 +1,22 @@
 ---
-import { nav } from '../data/site';
+import { nav, polishNav, type Locale } from '../data/site';
 
+interface Props { lang?: Locale; }
+const { lang = 'en' } = Astro.props;
 const path = Astro.url.pathname;
+const isPolish = lang === 'pl';
 ---
 
 <header>
   <div class="bar wrap">
-    <a class="mark" href="/" aria-label="Michał Suchocki — home">
+    <a class="mark" href={isPolish ? '/pl/' : '/'} aria-label={isPolish ? 'Michał Suchocki — strona główna' : 'Michał Suchocki — home'}>
       <span class="dot" aria-hidden="true"></span>
       <span class="mark__name">Michał Suchocki</span>
     </a>
 
-    <nav aria-label="Primary">
+    <nav aria-label={isPolish ? 'Nawigacja główna' : 'Primary'}>
       {
-        nav.map((item) => (
+        isPolish ? polishNav.map((item) => <a class="nav__item" href={item.href}>{item.label}</a>) : nav.map((item) => (
           <a
             href={item.href}
             class:list={['nav__item', { 'is-current': item.match.test(path) }]}
@@ -25,9 +28,9 @@ const path = Astro.url.pathname;
       }
       <span class="nav__divider" aria-hidden="true"></span>
       <div class="lang">
-        <span class="lang__on">EN</span>
+        {isPolish ? <a class="lang__off" href="/" hreflang="en" lang="en" aria-label="English version">EN</a> : <span class="lang__on" aria-current="true">EN</span>}
         <span class="lang__slash" aria-hidden="true">/</span>
-        <a class="lang__off" href="/pl/" hreflang="pl" lang="pl">PL</a>
+        {isPolish ? <span class="lang__on" aria-current="true">PL</span> : <a class="lang__off" href="/pl/" hreflang="pl" lang="pl" aria-label="Wersja polska">PL</a>}
       </div>
     </nav>
   </div>
@@ -80,6 +83,9 @@ const path = Astro.url.pathname;
   }
 
   .nav__item {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     font-family: var(--font-mono);
     font-size: var(--nav-size);
     letter-spacing: var(--nav-tracking);
@@ -123,22 +129,30 @@ const path = Astro.url.pathname;
 
   .lang__off {
     color: var(--ink-faint);
+    display: inline-flex;
+    align-items: center;
+    min-width: 30px;
+    min-height: 44px;
+    justify-content: center;
   }
 
   /* Below the desktop breakpoint the nav wraps to a second row rather than
      collapsing into a hamburger — five short items fit comfortably. */
   @media (max-width: 860px) {
+    header {
+      position: relative;
+    }
     .bar {
       height: auto;
       flex-direction: column;
       align-items: flex-start;
-      gap: 12px;
+      gap: 4px;
       padding-block: 14px;
     }
 
     nav {
       flex-wrap: wrap;
-      gap: 16px 18px;
+      gap: 0 18px;
     }
   }
 </style>

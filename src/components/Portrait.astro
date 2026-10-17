@@ -1,0 +1,31 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  priority?: boolean;
+}
+
+const { priority = false } = Astro.props;
+---
+
+<img
+  class="portrait"
+  src={site.portrait}
+  alt="Michał Suchocki"
+  width="800"
+  height="800"
+  loading={priority ? 'eager' : 'lazy'}
+  fetchpriority={priority ? 'high' : 'auto'}
+  decoding="async"
+/>
+
+<style>
+  .portrait {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    background: #eeedea;
+  }
+</style>

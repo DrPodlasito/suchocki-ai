@@ -36,7 +36,7 @@ const articleSchema = {
   description: essay.data.summary,
   datePublished: essay.data.date.toISOString(),
   inLanguage: 'en',
-  author: { '@type': 'Person', name: site.name, url: site.url },
+  author: { '@type': 'Person', '@id': `${site.url}/#michal`, name: site.name, url: site.url },
   publisher: { '@type': 'Person', name: site.name, url: site.url },
   mainEntityOfPage: new URL(`/writing/${essay.id}/`, site.url).href,
 };
@@ -48,7 +48,7 @@ const articleSchema = {
   ogType="article"
   schema={[articleSchema]}
 >
-  <main>
+  <main id="main-content">
     <div id="top" class="section">
       <div class="wrap head">
         <a class="back" href="/writing/">← Writing</a>
@@ -84,7 +84,7 @@ const articleSchema = {
                 {essay.data.notes.map((note, i) => (
                   <li>
                     <span class="notes__n">{i + 1}</span>
-                    <span set:html={note} />
+                    <span>{note}</span>
                   </li>
                 ))}
               </ol>
@@ -94,15 +94,7 @@ const articleSchema = {
 
         <div class="foot">
           <a href="#top">↑ Back to top</a>
-          {
-            /* Points at the PL landing page until the translated essays exist.
-               Swap to `/pl/writing/${essay.id}/` when they do. */
-            essay.data.languages.includes('PL') && (
-              <span>
-                Also in <a class="foot__lang" href="/pl/" hreflang="pl">Polski</a>
-              </span>
-            )
-          }
+
         </div>
       </article>
     </div>

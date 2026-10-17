@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
+import Portrait from '../components/Portrait.astro';
 import { site, links } from '../data/site';
+import { personSchema } from '../data/person';
 
 const publications = [
   {
@@ -20,7 +22,7 @@ const publications = [
   {
     title:
       'Doctoral dissertation — classification of auditory brainstem evoked potentials based on wavelet decomposition and the support vector machine',
-    meta: 'WAT, 2018 · clinically validated, 97% accuracy',
+    meta: 'WAT, 2018 · biomedical signal processing',
   },
 ];
 
@@ -34,9 +36,10 @@ const credentials = [
 
 <Base
   title={`About — ${site.name}`}
+  schema={[personSchema]}
   description="Samsung, Huawei, Cybercom, Cyberteq, Accenture, Detecon, Philip Morris International — and a doctorate in biomedical signal processing. The long version."
 >
-  <main class="wrap page">
+  <main id="main-content" class="wrap page">
     <div class="rail">
       <div class="rail__label">About</div>
       <div>
@@ -47,9 +50,7 @@ const credentials = [
               I have been since I was a child, occasionally to my parents' alarm.
             </p>
           </div>
-          <div class="portrait" role="img" aria-label="Portrait placeholder">
-            <span>portrait — same shoot as home</span>
-          </div>
+          <div class="top__portrait"><Portrait priority /></div>
         </div>
 
         <div class="split">
@@ -92,7 +93,8 @@ const credentials = [
                 <a class="side__muted" href={links.linkedin} rel="me noopener" target="_blank">
                   LinkedIn ↗
                 </a>
-                <a class="side__muted" href={links.x} rel="me noopener" target="_blank">X ↗</a>
+                <a class="side__muted" href={links.scholar} rel="me noopener" target="_blank">Google Scholar ↗</a>
+                <a class="side__muted" href={links.forbes} rel="noopener" target="_blank">Forbes Poland ↗</a>
               </div>
             </div>
           </div>
@@ -127,8 +129,8 @@ const credentials = [
 
   .top {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 260px;
-    gap: 56px;
+    grid-template-columns: minmax(0, 1fr) 220px;
+    gap: 40px;
     align-items: start;
   }
 
@@ -145,27 +147,6 @@ const credentials = [
     font-family: var(--font-mono);
     font-size: 12px;
     letter-spacing: 0.05em;
-    color: var(--ink-faint);
-  }
-
-  .portrait {
-    aspect-ratio: 4 / 5;
-    border: 1px solid var(--rule-strong);
-    background-image: repeating-linear-gradient(
-      135deg,
-      var(--surface-hover) 0 7px,
-      var(--surface) 7px 14px
-    );
-    display: flex;
-    align-items: flex-end;
-    padding: 14px;
-  }
-
-  .portrait span {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
     color: var(--ink-faint);
   }
 
@@ -269,8 +250,7 @@ const credentials = [
       gap: 32px;
     }
 
-    .portrait {
-      max-width: 260px;
-    }
+    .top__portrait { max-width: 220px; }
+
   }
 </style>

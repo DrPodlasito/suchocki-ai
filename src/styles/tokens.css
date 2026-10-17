@@ -25,8 +25,8 @@
   --ink-heading: #F5F2EC;   /* headings and lead lines */
   --ink-body: #C6C3BC;      /* long-form paragraphs */
   --ink-muted: #8C8981;     /* summaries, secondary nav */
-  --ink-faint: #5C5A55;     /* eyebrows, metadata */
-  --ink-ghost: #46453F;     /* captions, the nav slash */
+  --ink-faint: #96938C;     /* small text retains readable contrast */
+  --ink-ghost: #8C8981;     /* captions, the nav slash */
   --ink-dot: #2E2E2C;       /* the interpunct separators */
   --selection-fg: #04100E;
 
@@ -50,7 +50,7 @@
   /* Monospace eyebrow — used a dozen times, so it earns a token */
   --eyebrow-size: 11px;
   --eyebrow-tracking: 0.16em;
-  --nav-size: 11.5px;
+  --nav-size: 12px;
   --nav-tracking: 0.13em;
 
   /* --- Layout ------------------------------------------------------------ */
