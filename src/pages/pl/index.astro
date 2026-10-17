@@ -1,43 +1,112 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { site } from '../../data/site';
+import Signal from '../../components/Signal.astro';
+import Contact from '../../components/Contact.astro';
+import { links } from '../../data/site';
+import { personSchema } from '../../data/person';
+
+const projects = [
+  { name: 'CyCommSec', role: 'CEO i współzałożyciel', body: 'Cyberbezpieczeństwo ofensywne, zarządzanie podatnościami oraz wsparcie zgodności z NIS2 i DORA.', href: links.cycommsec, label: 'Odwiedź CyCommSec' },
+  { name: 'FuseAI', role: 'Twórca', body: 'System wieloagentowy wykorzystujący modele językowe do automatyzacji testów penetracyjnych i zarządzania podatnościami.', href: links.fuseai, label: 'Poznaj FuseAI' },
+  { name: 'Neurality', role: 'Założyciel', body: 'Przetwarzanie sygnałów i uczenie maszynowe w ochronie zdrowia. Projekt wyrósł z moich badań nad diagnostyką słuchu.', href: links.neurality, label: 'Zobacz prezentację projektu' },
+];
 ---
 
-<Base
-  title="Michał Suchocki — wersja polska"
-  description="Polska wersja strony jest w przygotowaniu."
->
-  <main class="wrap page" lang="pl">
-    <div class="rail">
-      <div class="rail__label">Polski</div>
-      <div>
-        <h1 class="page-title">Wkrótce</h1>
-        <p class="page-intro">
-          Polska wersja strony jest w przygotowaniu. Do tego czasu wszystkie treści dostępne są
-          po angielsku.
-        </p>
-        <div class="links">
-          <a class="mono-link" href="/">← English version</a>
-          <a class="mono-link" href={`mailto:${site.email}`}>{site.email}</a>
+<Base lang="pl" alternatePath="/" title="Michał Suchocki — cyberbezpieczeństwo i AI" description="Dr inż. Michał Suchocki — CEO i współzałożyciel CyCommSec, twórca FuseAI. Cyberbezpieczeństwo, sztuczna inteligencja, badania i edukacja." schema={[personSchema]}>
+  <main id="main-content">
+    <section class="section hero">
+      <div class="wrap">
+        <p class="eyebrow">Warszawa · Cyberbezpieczeństwo i AI</p>
+        <h1>Michał<br />Suchocki.</h1>
+        <p class="hero__roles">dr inż. · CEO i współzałożyciel CyCommSec · twórca FuseAI</p>
+        <p class="hero__intro">Łączę inżynierię, cyberbezpieczeństwo i sztuczną inteligencję. Buduję systemy i pomagam zrozumieć, jak działają.</p>
+        <div class="action-links">
+          <a href="#kontakt">Napisz do mnie</a>
+          <a href={links.linkedin} target="_blank" rel="me noopener">Poznaj mnie na LinkedIn ↗</a>
+        </div>
+        <Signal caption="Słuchowe potencjały wywołane — od tego sygnału zaczęły się moje badania" />
+      </div>
+    </section>
+
+    <section class="section" id="o-mnie">
+      <div class="wrap rail">
+        <h2 class="rail__label">O mnie</h2>
+        <div class="prose">
+          <p class="lead">Lubię być przy pierwszej wersji.</p>
+          <p>Jestem inżynierem elektroniki i telekomunikacji po Wojskowej Akademii Technicznej. Pracowałem przy telefonach Samsung Galaxy, sieciach LTE w Huawei oraz projektach telekomunikacyjnych, motoryzacyjnych i IoT w Cybercom. Rozwijałem Cyberteq na Bliskim Wschodzie i w Afryce, a doświadczenie doradcze zdobywałem również w Accenture i Detecon.</p>
+          <p>Dziś prowadzę CyCommSec i rozwijam FuseAI. Zajmuję się bezpieczeństwem ofensywnym oraz zastosowaniem AI w wykrywaniu podatności. Jako audytor wiodący ISO 42001 pracuję też nad tym, jak odpowiedzialnie zarządzać systemami sztucznej inteligencji.</p>
+          <p>Mój doktorat dotyczył klasyfikacji słuchowych potencjałów wywołanych pnia mózgu z użyciem dekompozycji falkowej i maszyn wektorów nośnych. Zanim automatyzowałem testy bezpieczeństwa, uczyłem algorytmy rozpoznawania sygnału w szumie.</p>
+          <a class="mono-link" href="/about/" lang="en">Pełna biografia po angielsku ↗</a>
         </div>
       </div>
-    </div>
+    </section>
+
+    <section class="section" id="projekty">
+      <div class="wrap rail">
+        <h2 class="rail__label">Projekty</h2>
+        <div class="projects">
+          {projects.map((project) => (
+            <article class="project">
+              <p class="project__role">{project.role}</p>
+              <h3>{project.name}</h3>
+              <p>{project.body}</p>
+              <a class="link-underline" href={project.href} target="_blank" rel="noopener">{project.label} ↗</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="publikacje">
+      <div class="wrap rail">
+        <h2 class="rail__label">Publikacje</h2>
+        <div class="prose">
+          <p class="lead">Od przetwarzania sygnałów do bezpieczeństwa AI.</p>
+          <p>Piszę o cyberbezpieczeństwie i zastosowaniach sztucznej inteligencji. Mój dorobek naukowy obejmuje badania nad analizą sygnałów biomedycznych.</p>
+          <div class="row-list">
+            <a class="row" href={links.forbes} target="_blank" rel="noopener"><span class="row__title">Artykuły i komentarze</span><span class="row__meta">Forbes Polska ↗</span></a>
+            <a class="row" href={links.ieee} target="_blank" rel="noopener"><span class="row__title" lang="en">Classification of auditory brainstem response using wavelet decomposition and SVM network</span><span class="row__meta">2016 · DOI ↗</span></a>
+            <a class="row" href={links.scholar} target="_blank" rel="me noopener"><span class="row__title">Profil naukowy</span><span class="row__meta">Google Scholar ↗</span></a>
+          </div>
+          <div class="action-links"><a href="/writing/">Czytaj eseje po angielsku</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="wystapienia">
+      <div class="wrap rail">
+        <h2 class="rail__label">Wystąpienia i edukacja</h2>
+        <div class="prose">
+          <p class="lead">Praktykę łączę z uczeniem innych.</p>
+          <p>Wykładam cyberbezpieczeństwo oraz teorię obliczeń i symulacji na WAT, testy penetracyjne i bezpieczeństwo OT na AGH, a także AI w cyberbezpieczeństwie w SGH. Prowadzę również szkolenia dla firm i zespołów zarządzających.</p>
+          <div class="row-list">
+            <a class="row" href="https://www.youtube.com/watch?v=b_Gwtb8ghlU" target="_blank" rel="noopener"><span class="row__title">Cyberbezpieczeństwo: nie tylko obrona, ale również atak</span><span class="row__meta">CYBERSEC CEE · 2024 ↗</span></a>
+            <a class="row" href="https://cyber24day.com/osoby/michal-suchocki/" target="_blank" rel="noopener"><span class="row__title">Cyber24 Day</span><span class="row__meta">Profil prelegenta ↗</span></a>
+          </div>
+          <div class="action-links"><a href="#kontakt">Zaproś mnie do współpracy</a><a href="/speaking/" lang="en">Więcej wystąpień — po angielsku</a></div>
+        </div>
+      </div>
+    </section>
+    <Contact lang="pl" />
   </main>
 </Base>
 
 <style>
-  .page {
-    padding-block: 88px 40px;
-  }
-
-  .rail__label {
-    padding-top: 14px;
-  }
-
-  .links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 26px;
-    margin-top: 36px;
-  }
+  .hero .wrap { padding-block: 76px 62px; }
+  .hero .eyebrow { color: var(--ink); margin: 0 0 32px; }
+  h1 { margin: 0; font-size: var(--size-hero); line-height: 0.95; letter-spacing: -0.04em; font-weight: 600; }
+  .hero__roles { font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); margin-top: 28px; }
+  .hero__intro { color: var(--ink-body); max-width: 48ch; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.45; margin-top: 26px; }
+  .prose { max-width: var(--prose); color: var(--ink-body); }
+  .prose p { margin: 0 0 22px; }
+  .prose .lead { color: var(--ink-heading); font-size: var(--size-lead); line-height: 1.35; letter-spacing: -0.02em; margin-bottom: 26px; }
+  .projects { display: grid; gap: 0; }
+  .project { border-top: 1px solid var(--rule); padding: 28px 0; }
+  .project:first-child { padding-top: 0; border-top: 0; }
+  .project:last-child { padding-bottom: 0; }
+  .project__role { font-family: var(--font-mono); color: var(--ink-faint); font-size: 12px; margin: 0 0 8px; }
+  .project h3 { font-size: 30px; line-height: 1.2; margin: 0; font-weight: 500; letter-spacing: -0.025em; }
+  .project p:not(.project__role) { max-width: 60ch; color: var(--ink-body); }
+  .project a { display: inline-block; padding-block: 8px; }
+  @media (max-width: 900px) { .hero .wrap { padding-block: 48px; } }
 </style>

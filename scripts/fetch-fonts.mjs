@@ -1,5 +1,5 @@
 /**
- * Downloads the two webfonts into public/fonts/ so the site never calls
+ * Downloads Latin and Latin Extended webfonts so the site never calls
  * Google at runtime. Run once: `npm run fonts`
  *
  * Both faces are SIL Open Font License 1.1 — self-hosting is permitted.
@@ -18,7 +18,7 @@ const outDir = resolve(root, 'public/fonts');
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
 
-const targets = [
+const faces = [
   {
     name: 'instrument-sans-variable.woff2',
     css: 'https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&display=swap',
@@ -32,6 +32,10 @@ const targets = [
     css: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400..500&display=swap',
   },
 ];
+const targets = faces.flatMap((face) => [
+  { ...face, subset: 'latin' },
+  { ...face, name: face.name.replace('-variable', '-latin-ext-variable'), subset: 'latin-ext' },
+]);
 
 async function exists(p) {
   try {
@@ -56,11 +60,12 @@ async function main() {
     if (!cssRes.ok) throw new Error(`CSS fetch failed for ${t.name}: ${cssRes.status}`);
     const css = await cssRes.text();
 
-    // Take the latin subset — the last @font-face block Google emits.
-    const urls = [...css.matchAll(/url\((https:\/\/[^)]+\.woff2)\)/g)].map((m) => m[1]);
-    if (urls.length === 0) throw new Error(`No woff2 URL found for ${t.name}`);
+    const blocks = [...css.matchAll(/\/\*\s*([^*]+?)\s*\*\/\s*(@font-face\s*\{[^}]+\})/g)];
+    const block = blocks.find((match) => match[1].trim() === t.subset)?.[2];
+    const url = block?.match(/url\((https:\/\/[^)]+\.woff2)\)/)?.[1];
+    if (!url) throw new Error(`No ${t.subset} woff2 URL found for ${t.name}`);
 
-    const fontRes = await fetch(urls.at(-1), { headers: { 'User-Agent': UA } });
+    const fontRes = await fetch(url, { headers: { 'User-Agent': UA } });
     if (!fontRes.ok) throw new Error(`Font fetch failed for ${t.name}: ${fontRes.status}`);
 
     await writeFile(dest, Buffer.from(await fontRes.arrayBuffer()));

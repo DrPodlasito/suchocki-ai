@@ -3,8 +3,7 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
-// Change this once the domain is live. Everything canonical,
-// the sitemap and the RSS feed derive from it.
+// Production domain shared by canonicals, the sitemap and the RSS feed.
 export const SITE = 'https://michalsuchocki.com';
 
 export default defineConfig({

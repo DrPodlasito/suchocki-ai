@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Signal from '../components/Signal.astro';
+import Contact from '../components/Contact.astro';
+import { personSchema } from '../data/person';
 import { site, links } from '../data/site';
 
 const essays = (await getCollection('essays', ({ data }) => !data.draft)).sort(
@@ -11,50 +13,23 @@ const essays = (await getCollection('essays', ({ data }) => !data.draft)).sort(
 const fmt = (d: Date) =>
   d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
 
-const personSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: 'Michał Suchocki',
-  honorificPrefix: 'dr inż.',
-  url: site.url,
-  email: `mailto:${site.email}`,
-  jobTitle: 'CEO & co-founder, CyCommSec',
-  description: site.description,
-  knowsLanguage: ['pl', 'en'],
-  address: { '@type': 'PostalAddress', addressLocality: 'Warsaw', addressCountry: 'PL' },
-  alumniOf: {
-    '@type': 'CollegeOrUniversity',
-    name: 'Military University of Technology (WAT)',
-    address: { '@type': 'PostalAddress', addressLocality: 'Warsaw', addressCountry: 'PL' },
-  },
-  worksFor: { '@type': 'Organization', name: 'CyCommSec', url: links.cycommsec },
-  knowsAbout: [
-    'Offensive security',
-    'Penetration testing',
-    'Artificial intelligence governance',
-    'ISO/IEC 42001',
-    'NIS2',
-    'DORA',
-    'Biomedical signal processing',
-  ],
-  sameAs: [links.linkedin, links.cycommsec, links.fuseai].filter((u) => u !== '#'),
-};
+
 ---
 
-<Base schema={[personSchema]}>
-  <main>
+<Base schema={[personSchema]} alternatePath="/pl/">
+  <main id="main-content">
     <!-- ------------------------------------------------------------- HERO -->
     <section class="section hero">
       <div class="hero__glow" aria-hidden="true"></div>
       <div class="wrap hero__inner">
-        <div class="hero__eyebrow" data-reveal>
+        <div class="hero__eyebrow">
           <span class="eyebrow eyebrow--bright">Warsaw · Offensive security & AI</span>
           <span class="hero__rule" aria-hidden="true"></span>
         </div>
 
-        <h1 class="hero__title" data-reveal>Michał<br />Suchocki<span>.</span></h1>
+        <h1 class="hero__title">Michał<br />Suchocki<span>.</span></h1>
 
-        <div class="hero__roles" data-reveal>
+        <div class="hero__roles">
           {
             site.roles.map((role, i) => (
               <>
@@ -65,6 +40,11 @@ const personSchema = {
           }
         </div>
 
+        <p class="hero__intro">I build at the intersection of engineering, cybersecurity, and artificial intelligence.</p>
+        <div class="action-links">
+          <a href="#contact">Get in touch</a>
+          <a href="/writing/">Read my work</a>
+        </div>
         <Signal />
       </div>
     </section>
@@ -72,45 +52,23 @@ const personSchema = {
     <!-- ----------------------------------------------------------- THESIS -->
     <section class="section">
       <div class="wrap rail">
-        <div class="rail__label">Thesis</div>
-        <div class="thesis" data-reveal>
+        <h2 class="rail__label">Thesis</h2>
+        <div class="thesis">
           <p class="thesis__lead">I like being there for version one.</p>
-          <p class="justify">
-            I started at Samsung, taking the first Galaxy phones through field testing before
-            anyone knew whether the line would matter. Then Huawei, as a product manager on one
-            of the first commercial LTE networks in Poland — at a point when LTE was still mostly
-            a promise on a slide. At Cybercom I built the telecom, automotive and IoT practices,
-            shipped platforms on three continents, and eventually ran the region out of Dubai. I
-            co-founded Cyberteq and grew it across the Middle East and Africa. In between there
-            was technology strategy at Accenture, consulting at Detecon, and several years
-            advising Philip Morris International as a security and generative-AI architect.
-          </p>
           <p>
-            I came into all of it as an engineer. I trained in electronics and telecommunications
-            at the Military University of Technology in Warsaw and stayed long enough to finish a
-            doctorate — on the human auditory system, classifying brainstem evoked potentials with
-            wavelet decomposition and support vector machines. The point was to let a machine read
-            a neurological signal a clinician would normally interpret by eye, and read it more
-            consistently. That software is still used in hearing diagnostics, and it became
-            <a class="link-underline" href="/ventures/#neurality">Neurality</a>. So before I ever
-            automated an attack I had spent years teaching algorithms to find the signal in the
-            noise. The problems turned out to be more alike than they look.
-          </p>
-          <p>
-            Today I run <a class="link-underline" href="/ventures/#cycommsec">CyCommSec</a> in
-            Warsaw, and I made <a class="link-underline" href="/ventures/#fuseai">FuseAI</a> — a
-            multi-agent system that uses large language models to automate penetration testing and
-            the whole cycle of vulnerability management. I think offensive security is one of the
-            places where AI will change the rules fastest, and I'd like to be one of the people who
-            decides how. But cybersecurity is where I do the work right now, not what the work is.
-            Building is what I actually do — and I expect the next thing I build will look nothing
-            like the last one.
+            I am an engineer, researcher, and founder. My work has taken me from Samsung Galaxy
+            field tests and commercial LTE networks to technology consulting across Europe,
+            the Middle East, and Africa. Today I run
+            <a class="link-underline" href="/ventures/#cycommsec">CyCommSec</a> and build
+            <a class="link-underline" href="/ventures/#fuseai">FuseAI</a>, applying large language
+            models to penetration testing and vulnerability management.
           </p>
           <p class="last">
-            I still teach: penetration testing and OT security at AGH in Kraków, cybersecurity and
-            the theory of computation and simulation at WAT, AI in cybersecurity at SGH. I write
-            for Forbes Poland and speak when I can be useful. I work in Polish and English, from
-            Warsaw.
+            My doctorate at WAT explored how machine learning can interpret auditory brainstem
+            responses. That research became the starting point for
+            <a class="link-underline" href="/ventures/#neurality">Neurality</a>. I still teach at
+            WAT, AGH, and SGH, write for Forbes Poland, and work on the governance of AI as an
+            ISO 42001 lead auditor. I work in Polish and English, from Warsaw.
           </p>
           <a class="cta" href="/about/">Full biography →</a>
         </div>
@@ -120,8 +78,8 @@ const personSchema = {
     <!-- ---------------------------------------------------------- WRITING -->
     <section class="section">
       <div class="wrap rail">
-        <div class="rail__label">Writing</div>
-        <div data-reveal>
+        <h2 class="rail__label">Writing</h2>
+        <div>
           {
             essays.slice(0, 2).map((essay) => (
               <a class="essay-row" href={`/writing/${essay.id}/`}>
@@ -147,13 +105,13 @@ const personSchema = {
     <!-- --------------------------------------------------------- RESEARCH -->
     <section class="section">
       <div class="wrap rail">
-        <div class="rail__label">Research</div>
-        <div data-reveal>
+        <h2 class="rail__label">Research</h2>
+        <div>
           <div class="stats">
             <div class="stat">
-              <div class="stat__n">97<span>%</span></div>
+              <div class="stat__n">ABR</div>
               <div class="stat__label">
-                Classification accuracy, clinically validated — 95% sensitivity, 98% specificity.
+                Auditory brainstem response — the signal at the centre of my doctoral research.
               </div>
             </div>
             <div class="stat">
@@ -201,8 +159,8 @@ const personSchema = {
     <!-- --------------------------------------------------------- VENTURES -->
     <section class="section">
       <div class="wrap rail">
-        <div class="rail__label">Ventures</div>
-        <div data-reveal>
+        <h2 class="rail__label">Ventures</h2>
+        <div>
           <div class="cards">
             <a class="card" href="/ventures/#cycommsec">
               <div class="card__role">CEO, co-founder</div>
@@ -211,7 +169,7 @@ const personSchema = {
                 ISO 27001-certified offensive security, vulnerability management, and NIS2 / DORA
                 compliance — built by practitioners for the people who carry the risk.
               </div>
-              <div class="card__foot">cycommsec.com ↗</div>
+              <div class="card__foot">About the company →</div>
             </a>
             <a class="card" href="/ventures/#fuseai">
               <div class="card__role">Creator</div>
@@ -220,7 +178,7 @@ const personSchema = {
                 An autonomous, multi-agent penetration-testing platform powered by LLMs, designed
                 to run on-premise for organizations that need full control of their data.
               </div>
-              <div class="card__foot">getfuseai.com ↗</div>
+              <div class="card__foot">About the platform →</div>
             </a>
             <a class="card" href="/ventures/#neurality">
               <div class="card__role">Founder</div>
@@ -229,7 +187,7 @@ const personSchema = {
                 An AI R&D company applying signal processing and machine learning to healthcare,
                 beginning with automated hearing diagnostics.
               </div>
-              <div class="card__foot">Digital Health Accelerator, Batch II</div>
+              <div class="card__foot">About the research →</div>
             </a>
           </div>
         </div>
@@ -239,18 +197,16 @@ const personSchema = {
     <!-- --------------------------------------------------------- TRAINING -->
     <section class="section">
       <div class="wrap rail">
-        <div class="rail__label">Training</div>
-        <div data-reveal>
-          <p class="thesis__lead">
-            I teach this for a living, not as a sideline.
-          </p>
+        <h2 class="rail__label">Training</h2>
+        <div>
+          <p class="thesis__lead">I bring the work into the classroom.</p>
           <p class="training__body">
-            Three university lectureships and seventeen years of shipping the systems under
-            discussion. The courses below are the same material, compressed for people who have
-            to make decisions on Monday.
+            Alongside university lectures, I run workshops on cybersecurity, applied AI, and
+            AI governance for teams and decision-makers. The starting point is the problem
+            your team needs to solve.
           </p>
           <div class="link-row">
-            <a class="mono-link" href="/training/">Courses & workshops →</a>
+            <a class="mono-link" href="/training/">Teaching & workshops →</a>
           </div>
         </div>
       </div>
@@ -259,8 +215,8 @@ const personSchema = {
     <!-- ---------------------------------------------------- SELECTED TALKS -->
     <section class="section">
       <div class="wrap rail">
-        <div class="rail__label">Selected talks</div>
-        <div data-reveal>
+        <h2 class="rail__label">Selected talks</h2>
+        <div>
           <div class="row-list">
             <div class="row row--top">
               <span class="row__title">
@@ -283,6 +239,7 @@ const personSchema = {
         </div>
       </div>
     </section>
+    <Contact />
   </main>
 </Base>
 
@@ -333,7 +290,6 @@ const personSchema = {
     line-height: 0.92;
     letter-spacing: -0.04em;
     font-weight: 600;
-    transition-delay: 0.05s;
   }
 
   .hero__roles {
@@ -345,11 +301,18 @@ const personSchema = {
     font-size: 12px;
     letter-spacing: 0.05em;
     color: var(--ink-muted);
-    transition-delay: 0.12s;
   }
 
   .dot {
     color: var(--ink-dot);
+  }
+
+  .hero__intro {
+    max-width: 48ch;
+    color: var(--ink-body);
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.45;
+    margin: 28px 0 0;
   }
 
   /* --- Thesis ------------------------------------------------------------- */
@@ -368,11 +331,6 @@ const personSchema = {
   .thesis p {
     margin: 0 0 20px;
     color: var(--ink-body);
-  }
-
-  .thesis p.justify {
-    text-align: justify;
-    hyphens: auto;
   }
 
   .thesis p.last {

@@ -36,16 +36,18 @@ const ventures = [
       beginning with automated hearing diagnostics. It grew out of the software built for my
       doctorate, which is still used in clinics.`,
     facts: ['Healthcare AI', 'Tenity / dhc Digital Health Accelerator, Batch II'],
-    link: { label: 'Announcement ↗', href: links.neurality },
+    link: { label: 'Accelerator showcase ↗', href: links.neurality },
   },
 ];
 
 const schema = ventures.map((v) => ({
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': v.id === 'fuseai' ? 'SoftwareApplication' : 'Organization',
   name: v.name,
-  url: v.link.href !== '#' ? v.link.href : undefined,
-  founder: { '@type': 'Person', name: site.name, url: site.url },
+  url: v.id === 'neurality' ? undefined : v.link.href,
+  ...(v.id === 'fuseai'
+    ? { applicationCategory: 'SecurityApplication', creator: { '@id': `${site.url}/#michal` } }
+    : { founder: { '@id': `${site.url}/#michal`, '@type': 'Person', name: site.name } }),
 }));
 ---
 
@@ -54,14 +56,14 @@ const schema = ventures.map((v) => ({
   description="CyCommSec, FuseAI and Neurality — one company that finds weaknesses, one system that automates the finding, and one that reads medical signal."
   schema={schema}
 >
-  <main class="wrap page">
+  <main id="main-content" class="wrap page">
     <div class="rail">
       <div class="rail__label">Three</div>
       <div>
         <h1 class="page-title">Ventures</h1>
         <p class="page-intro">
           One company that finds weaknesses, one system that automates the finding, and one that
-          reads medical signal. They are being consolidated under Suchy Group.
+          reads medical signal. Cybersecurity, applied AI, and biomedical signal processing.
         </p>
 
         <div class="stack">
@@ -84,11 +86,6 @@ const schema = ventures.map((v) => ({
               </section>
             ))
           }
-        </div>
-
-        <div class="note">
-          CyCommSec, FuseAI and Neurality are being consolidated under
-          <span>Suchy Group</span>. No link yet.
         </div>
       </div>
     </div>
@@ -162,20 +159,6 @@ const schema = ventures.map((v) => ({
 
   .venture__facts a:hover {
     color: var(--ink-bright);
-  }
-
-  .note {
-    margin-top: 34px;
-    padding: 24px 26px;
-    border: 1px dashed var(--rule-strong);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    color: var(--ink-faint);
-  }
-
-  .note span {
-    color: var(--ink-muted);
   }
 
   @media (max-width: 900px) {

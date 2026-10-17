@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#0a0a0a"/>
+<circle cx="82" cy="80" r="9" fill="none" stroke="#ede9e1" stroke-width="2"/>
+<text x="110" y="88" font-family="sans-serif" font-size="24" fill="#aaa69f">michalsuchocki.com</text>
+<text x="70" y="260" font-family="sans-serif" font-weight="600" font-size="96" letter-spacing="-4" fill="#f5f2ec">Michał</text>
+<text x="70" y="365" font-family="sans-serif" font-weight="600" font-size="96" letter-spacing="-4" fill="#f5f2ec">Suchocki.</text>
+<line x1="72" y1="440" x2="1128" y2="440" stroke="#3a3a38"/>
+<text x="72" y="500" font-family="sans-serif" font-size="32" fill="#c6c3bc">Offensive security &amp; artificial intelligence</text>
+<text x="72" y="552" font-family="sans-serif" font-size="22" fill="#96938c">Engineer. Researcher. Founder.</text>
+</svg>

@@ -1,16 +1,17 @@
 ---
-import { site, links } from '../data/site';
+import { site, links, type Locale } from '../data/site';
+interface Props { lang?: Locale; }
+const { lang = 'en' } = Astro.props;
 ---
 
 <footer>
   <div class="wrap inner">
-    <span>{site.email} · {site.location}</span>
+    <span><a href={`mailto:${site.email}`}>{site.email}</a> · {lang === 'pl' ? 'Warszawa' : site.location}</span>
     <div class="links">
       <a href={links.linkedin} rel="me noopener" target="_blank">LinkedIn</a>
-      <a href={links.x} rel="me noopener" target="_blank">X</a>
       <a href={links.scholar} rel="noopener" target="_blank">Google Scholar</a>
       <a href="/rss.xml">RSS</a>
-      <a href="/pl/" hreflang="pl" lang="pl">Polski</a>
+      <a href={lang === 'pl' ? '/' : '/pl/'} hreflang={lang === 'pl' ? 'en' : 'pl'} lang={lang === 'pl' ? 'en' : 'pl'}>{lang === 'pl' ? 'English' : 'Polski'}</a>
     </div>
   </div>
 </footer>
@@ -41,6 +42,9 @@ import { site, links } from '../data/site';
   }
 
   .links a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
     color: var(--ink-faint);
   }
 

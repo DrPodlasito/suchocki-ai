@@ -9,20 +9,21 @@ const seq = [
   27, 35, 20, 12, 8, 18, 30, 23, 15, 10, 25, 33, 19, 11, 7, 14,
 ];
 const bars = seq.map((h) => ({ h, o: (0.28 + (h / 44) * 0.5).toFixed(3) }));
+interface Props { caption?: string; }
+const { caption = 'auditory brainstem response · the first signal I taught a machine to read' } = Astro.props;
 ---
 
-<div class="signal" data-reveal aria-hidden="true">
+<div class="signal" aria-hidden="true">
   <div class="bars">
     {bars.map((b) => <span style={`height:${b.h}px;opacity:${b.o}`} />)}
   </div>
   <span class="caption">
-    auditory brainstem response · the first signal I taught a machine to read
+    {caption}
   </span>
 </div>
 
 <style>
   .signal {
-    transition-delay: 0.26s;
     height: 46px;
     margin-top: 64px;
     display: flex;
