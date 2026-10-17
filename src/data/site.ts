@@ -11,7 +11,7 @@ export const site = {
   url: 'https://michalsuchocki.com',
   locale: 'en',
   location: 'Warsaw',
-  portrait: '/images/michal-suchocki.jpg',
+  portrait: '/images/michal-suchocki-bw.jpg',
   // Deliberately on suchocki.ai — that mailbox is on the active mail server.
   email: 'michal@suchocki.ai',
   roles: [
