@@ -35,7 +35,6 @@ const { caption = 'auditory brainstem response · the first signal I taught a ma
     display: flex;
     align-items: flex-end;
     gap: 3px;
-    animation: sigDrift 9s ease-in-out infinite;
   }
 
   .bars span {
@@ -51,16 +50,6 @@ const { caption = 'auditory brainstem response · the first signal I taught a ma
     text-transform: uppercase;
     color: var(--ink-ghost);
     transform: translateY(-2px);
-  }
-
-  @keyframes sigDrift {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-2px);
-    }
   }
 
   @media (max-width: 700px) {

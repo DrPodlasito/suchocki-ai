@@ -1,6 +1,7 @@
 ---
 import Portrait from './Portrait.astro';
 import Signal from './Signal.astro';
+import NeuralBackground from './NeuralBackground.astro';
 import { links, site, type Locale } from '../data/site';
 
 interface Props {
@@ -15,6 +16,7 @@ const roles = pl
 ---
 
 <section class="section hero">
+  <NeuralBackground lang={lang} />
   <div class="wrap hero__inner">
     <p class="hero__eyebrow eyebrow">
       {pl ? 'Warszawa · Cyberbezpieczeństwo i AI' : 'Warsaw · Offensive security & AI'}
@@ -47,7 +49,11 @@ const roles = pl
 </section>
 
 <style>
+  .hero { position: relative; isolation: isolate; overflow: hidden; }
+
   .hero__inner {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: minmax(0, 1fr) clamp(240px, 27vw, 320px);
     column-gap: clamp(40px, 6vw, 88px);
