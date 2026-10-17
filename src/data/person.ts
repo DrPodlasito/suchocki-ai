@@ -7,6 +7,7 @@ export const personSchema = {
   name: site.name,
   honorificPrefix: 'dr inż.',
   url: site.url,
+  image: new URL(site.portrait, site.url).href,
   email: `mailto:${site.email}`,
   jobTitle: 'CEO & co-founder, CyCommSec',
   description: site.description,

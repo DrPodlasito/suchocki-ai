@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Portrait from '../components/Portrait.astro';
 import { site, links } from '../data/site';
 import { personSchema } from '../data/person';
 
@@ -49,7 +50,7 @@ const credentials = [
               I have been since I was a child, occasionally to my parents' alarm.
             </p>
           </div>
-
+          <div class="top__portrait"><Portrait priority /></div>
         </div>
 
         <div class="split">
@@ -127,7 +128,10 @@ const credentials = [
   }
 
   .top {
-    max-width: 760px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 220px;
+    gap: 40px;
+    align-items: start;
   }
 
   h1 {
@@ -245,6 +249,8 @@ const credentials = [
       grid-template-columns: minmax(0, 1fr);
       gap: 32px;
     }
+
+    .top__portrait { max-width: 220px; }
 
   }
 </style>

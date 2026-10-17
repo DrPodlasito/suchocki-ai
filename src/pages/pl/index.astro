@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Signal from '../../components/Signal.astro';
+import Hero from '../../components/Hero.astro';
 import Contact from '../../components/Contact.astro';
 import { links } from '../../data/site';
 import { personSchema } from '../../data/person';
@@ -14,19 +14,7 @@ const projects = [
 
 <Base lang="pl" alternatePath="/" title="Michał Suchocki — cyberbezpieczeństwo i AI" description="Dr inż. Michał Suchocki — CEO i współzałożyciel CyCommSec, twórca FuseAI. Cyberbezpieczeństwo, sztuczna inteligencja, badania i edukacja." schema={[personSchema]}>
   <main id="main-content">
-    <section class="section hero">
-      <div class="wrap">
-        <p class="eyebrow">Warszawa · Cyberbezpieczeństwo i AI</p>
-        <h1>Michał<br />Suchocki.</h1>
-        <p class="hero__roles">dr inż. · CEO i współzałożyciel CyCommSec · twórca FuseAI</p>
-        <p class="hero__intro">Łączę inżynierię, cyberbezpieczeństwo i sztuczną inteligencję. Buduję systemy i pomagam zrozumieć, jak działają.</p>
-        <div class="action-links">
-          <a href="#kontakt">Napisz do mnie</a>
-          <a href={links.linkedin} target="_blank" rel="me noopener">Poznaj mnie na LinkedIn ↗</a>
-        </div>
-        <Signal caption="Słuchowe potencjały wywołane — od tego sygnału zaczęły się moje badania" />
-      </div>
-    </section>
+    <Hero lang="pl" />
 
     <section class="section" id="o-mnie">
       <div class="wrap rail">
@@ -92,11 +80,6 @@ const projects = [
 </Base>
 
 <style>
-  .hero .wrap { padding-block: 76px 62px; }
-  .hero .eyebrow { color: var(--ink); margin: 0 0 32px; }
-  h1 { margin: 0; font-size: var(--size-hero); line-height: 0.95; letter-spacing: -0.04em; font-weight: 600; }
-  .hero__roles { font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); margin-top: 28px; }
-  .hero__intro { color: var(--ink-body); max-width: 48ch; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.45; margin-top: 26px; }
   .prose { max-width: var(--prose); color: var(--ink-body); }
   .prose p { margin: 0 0 22px; }
   .prose .lead { color: var(--ink-heading); font-size: var(--size-lead); line-height: 1.35; letter-spacing: -0.02em; margin-bottom: 26px; }
@@ -108,5 +91,4 @@ const projects = [
   .project h3 { font-size: 30px; line-height: 1.2; margin: 0; font-weight: 500; letter-spacing: -0.025em; }
   .project p:not(.project__role) { max-width: 60ch; color: var(--ink-body); }
   .project a { display: inline-block; padding-block: 8px; }
-  @media (max-width: 900px) { .hero .wrap { padding-block: 48px; } }
 </style>
